@@ -1,10 +1,15 @@
 var questions = [];
 var answers = [];
-let row = 5;
-let col = 5;
+var row = 5;
+var col = 5;
+var numQuestions = row * col;
 var currentQuestionRow = 999;
 var currentQuestionCol = 99;
 var currentQuestionMoney = 0;
+var playerCount = 4;
+var wagers = [];
+var moneyAfterWagers = [];
+
 
 for (let i = 0; i < row; i++){
     questions[i] = [];
@@ -15,12 +20,22 @@ for (let i = 0; i < row; i++){
     }
 }
 
+questions[0][col] = "final jeopardy";
+answers[0][col] = "answer jeopardy"
+
+
+
 $(document).ready(function(){
     $("#question-screen").click(function(){
         showAnswer();
     });
     $('#answer-screen').click(function(){
-        showBoard();
+        if (wagers.length != playerCount){
+            showBoard();
+        }
+        else{
+            showWinScreen();
+        }
     });
 });
 
@@ -44,6 +59,7 @@ function loadQuestion(row, col){
 }
 
 function showAnswer(){
+    numQuestions--;
     document.getElementById('question-screen').style.display = 'none';
     document.getElementById('answer-screen').style.display = 'flex';
     let x = document.getElementsByClassName('buttons');
@@ -67,12 +83,60 @@ function greyOutQuestion(){
 function correctAnswer(player){
     let x = document.getElementsByClassName('money')
     let currentMoney = parseInt(x[player].innerHTML);
-    x[player].innerHTML = currentMoney + currentQuestionMoney + "$";
-    showAnswer();
+    if (wagers.length != playerCount){
+        x[player].innerHTML = currentMoney + currentQuestionMoney + "$";
+        showAnswer();
+    }
+    else{
+        x[player].innerHTML = "???";
+        moneyAfterWagers[player] = currentMoney + wagers[player];
+        document.getElementsByClassName('buttons')[player].style.display = 'none';
+    }
 }
 
 function incorrectAnswer(player){
     let x = document.getElementsByClassName('money')
-    let currentMoney = parseFloat(x[player].innerHTML);
-    x[player].innerHTML = currentMoney - currentQuestionMoney + "$";
+    let currentMoney = parseInt(x[player].innerHTML);
+    if (wagers.length != playerCount){
+        x[player].innerHTML = currentMoney - currentQuestionMoney + "$";
+    }
+    else{
+        x[player].innerHTML = "???";
+        moneyAfterWagers[player] = currentMoney - wagers[player];
+        document.getElementsByClassName('buttons')[player].style.display = 'none';
+    }
+}
+
+function submitWager(){
+    let x = document.getElementsByClassName('wager-box');
+    let y = document.getElementsByClassName('money');
+    for (let i = 0; i < playerCount; i++){
+        let currentMoney = parseInt(y[i].innerHTML);
+        if (x[i].value > currentMoney || (currentMoney <= 0 && x[i].value != 0) || !x[i].value.match(/^[0-9]+$/)){
+            alert("Player" + (i+1) + "'s wager is invalid");
+            return;
+        }
+        wagers[i] = parseInt(x[i].value);
+        x[i].style.display = 'none';
+    }
+    document.getElementById('final-jeopardy-wager').style.display = 'none';
+    showQuestion(0, col);
+}
+
+function showWinScreen(){
+    document.getElementById('win-screen').style.display = 'flex';
+    document.getElementById('answer-screen').style.display = 'none';
+    let x = document.getElementsByClassName('money');
+    let winnerMoney = parseInt(x[0].innerHTML);
+    let winnerIndex = 0;   
+    for (let i = 0; i < playerCount; i++){
+        x[i].innerHTML = moneyAfterWagers[i] + "$";
+        if (winnerMoney < parseInt(x[i].innerHTML)){
+            winnerMoney = parseInt(x[i].innerHTML);
+            winnerIndex = i;
+        }
+    }
+
+    let winnerIcon = document.getElementsByClassName('player-icon')[winnerIndex].src;
+    document.getElementById('winner-icon').src = winnerIcon;
 }
