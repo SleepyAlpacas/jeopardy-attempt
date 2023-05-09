@@ -3,12 +3,74 @@
     height: 0;
 }
 
+#character-select{
+    height: 73vh;
+    display:flex;
+    align-items: flex-start;
+    align-content: space-around;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.character{
+    height: 37%;
+    width: 21%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: white;
+}
+
+.character-info{
+    height: 27%;
+    width: inherit;
+    position: absolute;
+}
+
+.character-info div{
+    visibility: hidden;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    flex-wrap:wrap;
+    align-content: center;
+    display:flex;
+    justify-content: center;
+}
+
+.character-info:hover div{
+
+    background-color: whitesmoke;
+    visibility: visible;
+}
+
+.character-info-text{
+    flex-basis: 100%;
+    text-align: center;
+}
+.green-text{
+    color: green;
+}
+.red-text{
+    color:red;
+}
+.orange-text{
+    color: orange;
+}
+
+
+
+.character-icon{
+    max-width: 80%;
+    max-height: 70%;
+}
+
 /*board stuff*/
 
 #board{
-    /*border: 5px solid red;*/
     height: 73vh;
-    display: none;
+    display:none;
 }
 .board-row{
     display:flex;
@@ -63,7 +125,7 @@
     height: 73vh;
 
     flex-direction: column;
-    display:flex; /*display: flex*/
+    display:none; /*display: flex*/
     align-items: center;
     justify-content:space-evenly
 
@@ -72,6 +134,7 @@
 
 .wager-box{
     width: 10vw;
+    display:none;
 }
 
 /*win-screen*/
