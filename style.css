@@ -98,24 +98,20 @@
     height: 73vh;
     display: none;
 
-    border: 1px solid black;
     align-items: center;
     justify-content: center;
 }
 
 #question-text{
     font-size: 50px;
-    border: 1px solid red;
 }
 #answer-text{
     font-size: 50px;
-    border: 1px solid red;
 }
 #answer-screen{
     height: 73vh;
     display: none;
 
-    border: 1px solid black;
     align-items: center;
     justify-content: center;
 }
@@ -147,7 +143,7 @@
     display: none;
 }
 #winner-icon{
-    width: 25vw;
+    width: 15vw;
 }
 
 /*players*/
@@ -172,5 +168,9 @@
 }
 
 .buttons{
+    display:none;
+}
+
+.power-button{
     display:none;
 }

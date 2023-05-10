@@ -2,7 +2,7 @@ var questions = [];
 var answers = [];
 var row = 5;
 var col = 5;
-var numQuestions = row * col;
+var numQuestions = row*col;
 var currentQuestionRow = 999;
 var currentQuestionCol = 99;
 var currentQuestionMoney = 0;
@@ -32,7 +32,6 @@ questions[0][col] = "final jeopardy";
 answers[0][col] = "answer jeopardy"
 
 
-
 $(document).ready(function(){
     $("#question-screen").click(function(){
         if (wagers.length != playerCount || moneyAfterWagers.length == playerCount){
@@ -57,7 +56,9 @@ function showQuestion(row, col){
     let x = document.getElementsByClassName('buttons');
     for (let i = 0; i < x.length; i++){
         x[i].style.display = "block";
+        x[i].lastElementChild.style.display = 'none';
     }
+    checkActivePowerVisibility();
 }
 
 function loadQuestion(row, col){
@@ -83,6 +84,7 @@ function showBoard(){
     if (numQuestions != 0){
         greyOutQuestion();
         document.getElementById('board').style.display = 'block';
+        checkActivePowerVisibility();
     }
     else{
         document.getElementById('final-jeopardy-wager').style.display = 'flex';
@@ -104,33 +106,37 @@ function greyOutQuestion(){
 }
 
 function correctAnswer(player){
-    let x = document.getElementsByClassName('money')
-    let currentMoney = parseInt(x[player].innerHTML);
     if (wagers.length != playerCount){
         correctPlayer = player;
-        x[player].innerHTML = currentMoney + currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player] + "$";
+        addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
         checkPowerCorrect(player);
         showAnswer();
     }
     else{
-        x[player].innerHTML = "???";
+        let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
+        document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney + wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
     }
 }
 
 function incorrectAnswer(player){
-    let x = document.getElementsByClassName('money')
-    let currentMoney = parseInt(x[player].innerHTML);
     if (wagers.length != playerCount){
-        x[player].innerHTML = currentMoney - currentQuestionMoney * playerIncorrectModifier[player] + "$";
+        addMoney(player, -(currentQuestionMoney * playerIncorrectModifier[player]));
         checkPowerIncorrect(player);
     }
     else{
-        x[player].innerHTML = "???";
+        let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
+        document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney - wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
     }
+}
+
+function addMoney(player, amount){
+    let x = document.getElementsByClassName('money');
+    let currentMoney = parseInt(x[player].innerHTML);
+    x[player].innerHTML = currentMoney + amount + "$";
 }
 
 function submitWager(){
@@ -173,6 +179,8 @@ function setPlayerCharacter(characterNum){
     if (currentPlayerCount == playerCount) {
         document.getElementById('character-select').style.display = 'none';
         document.getElementById('board').style.display = 'block';
+        checkActivePowerVisibility();
+        
     }
     else{
         document.getElementById('character-select-header').innerHTML = "Player " + (currentPlayerCount + 1) + " Select Your Character"
@@ -219,6 +227,7 @@ function initCharacter(characterNum){
     }
 }
 
+//the bingo function doesn't work on all board sizes yet
 function checkPowerCorrect(player){
     if (playerCharacters[player] == 3){
         playerCorrectBonus[player] += 50;
@@ -226,10 +235,107 @@ function checkPowerCorrect(player){
     else if (playerCharacters[player] == 5){
         playerCorrectBonus[player] = Math.floor(Math.random() * (8) - 2) * 100;
     }
+    else if (playerCharacters[player] == 7){
+        greyOutQuestion();
+        correctPlayer = player;
+        let x = document.getElementsByClassName('board-cell');
+        for (let i = 0; i < col; i++){
+            if (x[(currentQuestionRow+1)*5+i].nodeName == 'BUTTON' || x[(currentQuestionRow+1)*5+i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7] ){
+                break;
+            }
+            if (i == col-1){
+                console.log("HORIZONTAL BRONGO");
+                addMoney(player, 2500);
+            }
+        }
+        for (let i = 1; i < row+1; i++){
+            if (x[i*5+currentQuestionCol].nodeName == 'BUTTON' || x[i*5+currentQuestionCol].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
+                break;
+            }
+            if (i == row){
+                console.log("VERTICAL BRONGO");
+                addMoney(player, 2500);
+            }
+        }
+        if (currentQuestionCol == currentQuestionRow){
+            for (let i = 0; i < row; i++){
+                if (x[5*(i+1) + i].nodeName == 'BUTTON' || x[5*(i+1) + i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
+                    console.log("i've broken" + (5*i) + " " + i);
+                    break;
+                }
+                if (i == row-1){
+                    console.log("DIAGONAL FORWARD BRONGO");
+                    addMoney(player, 2500);
+                }
+            }
+        }
+        if (currentQuestionCol + currentQuestionRow == 4){
+            for (let i = 1; i < row + 1; i++){
+                if (x[5*(i+1) - i].nodeName == 'BUTTON' || x[5*(i+1) - i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
+                    console.log("i've broken" + (5*i) + " " + i);
+                    break;
+                }
+                if (i == row){
+                    console.log("DIAGONAL BACKWARD BRONGO");
+                    addMoney(player, 2500);
+                }
+            }
+        }
+    }
 }
 
 function checkPowerIncorrect(player){
     if (playerCharacters[player] == 3){
         playerCorrectBonus[player] = 0;
+    }
+}
+
+function useActivePower(player){
+    if (playerCharacters[player] == 1){
+        let random = Math.random();
+        if (random <= 0.5){
+            addMoney(player, parseInt(document.getElementsByClassName('money')[player].innerHTML));
+        }
+        else if (random <= 0.9){
+            addMoney(player, -parseInt(document.getElementsByClassName('money')[player].innerHTML));
+        }
+        else{
+            let totalMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
+            addMoney(player, -parseInt(document.getElementsByClassName('money')[player].innerHTML));
+            for (let i = 0; i < playerCount; i++){
+                addMoney(i, Math.floor(totalMoney/playerCount));
+            }
+        }
+        document.getElementsByClassName('buttons')[player].style.display = 'none';
+        $(".buttons").eq(player).children().css("display","inline-block");
+    }
+    playerPowerUses[player]--;
+    if (playerPowerUses[player] == 0) {
+        document.getElementsByClassName('power-button')[player].style.display = 'none';
+    }
+}
+
+function checkActivePowerVisibility(){
+    for (let player = 0; player < playerCount; player++){
+        if (playerPowerUses[player] == 0) continue;
+        else if (playerCharacters[player] == 1){
+            if (document.getElementById('board').style.display == 'none'){
+                $(".buttons").eq(player).children().css("display","inline-block");
+                document.getElementsByClassName('power-button')[player].style.display = 'none';
+            }
+            else{
+                document.getElementsByClassName('buttons')[player].style.display = 'block';
+                $(".buttons").eq(player).children().css("display","none");
+                document.getElementsByClassName('power-button')[player].style.display = 'inline-block';
+            }
+        }
+        else if (playerCharacters[player] == 2 || playerCharacters[player] == 4){
+            if (document.getElementById('question-screen').style.display != 'none'){
+                document.getElementsByClassName('power-button')[player].style.display = 'inline-block';
+            }
+            else{
+                document.getElementsByClassName('power-button')[player].style.display = 'none';
+            }
+        }
     }
 }
