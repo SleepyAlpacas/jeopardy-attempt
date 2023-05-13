@@ -104,9 +104,19 @@
 
 #question-text{
     font-size: 50px;
+    display: flex;
+    column-gap: 10vw;
+}
+.question-img{
+    height: 50vh;
+}
+.question-vid{
+    height: 70vh;
 }
 #answer-text{
     font-size: 50px;
+    display: flex;
+    column-gap: 10vw;
 }
 #answer-screen{
     height: 73vh;
