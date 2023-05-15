@@ -159,14 +159,9 @@ function showWinScreen(){
     document.getElementById('win-screen').style.display = 'flex';
     document.getElementById('answer-screen').style.display = 'none';
     let x = document.getElementsByClassName('money');
-    let winnerMoney = parseInt(x[0].innerHTML);
-    let winnerIndex = 0;   
+    let winnerIndex = moneyAfterWagers.indexOf(Math.max.apply(null, moneyAfterWagers));   
     for (let i = 0; i < playerCount; i++){
         x[i].innerHTML = moneyAfterWagers[i] + "$";
-        if (winnerMoney < parseInt(x[i].innerHTML)){
-            winnerMoney = parseInt(x[i].innerHTML);
-            winnerIndex = i;
-        }
     }
 
     let winnerIcon = document.getElementsByClassName('player-icon')[winnerIndex].src;
@@ -240,7 +235,7 @@ function checkPowerCorrect(player){
         correctPlayer = player;
         let x = document.getElementsByClassName('board-cell');
         for (let i = 0; i < col; i++){
-            if (x[(currentQuestionRow+1)*5+i].nodeName == 'BUTTON' || x[(currentQuestionRow+1)*5+i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7] ){
+            if (x[(currentQuestionRow+1)*5+i].nodeName == 'BUTTON' || x[(currentQuestionRow+1)*5+i].innerHTML == '' || x[(currentQuestionRow+1)*5+i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7] ){
                 break;
             }
             if (i == col-1){
@@ -249,7 +244,7 @@ function checkPowerCorrect(player){
             }
         }
         for (let i = 1; i < row+1; i++){
-            if (x[i*5+currentQuestionCol].nodeName == 'BUTTON' || x[i*5+currentQuestionCol].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
+            if (x[i*5+currentQuestionCol].nodeName == 'BUTTON' || x[i*5+currentQuestionCol].innerHTML == '' || x[i*5+currentQuestionCol].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
                 break;
             }
             if (i == row){
@@ -259,7 +254,7 @@ function checkPowerCorrect(player){
         }
         if (currentQuestionCol == currentQuestionRow){
             for (let i = 0; i < row; i++){
-                if (x[5*(i+1) + i].nodeName == 'BUTTON' || x[5*(i+1) + i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
+                if (x[5*(i+1) + i].nodeName == 'BUTTON' || x[5*(i+1) + i].innerHTML == ''  || x[5*(i+1) + i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
                     console.log("i've broken" + (5*i) + " " + i);
                     break;
                 }
@@ -271,7 +266,7 @@ function checkPowerCorrect(player){
         }
         if (currentQuestionCol + currentQuestionRow == 4){
             for (let i = 1; i < row + 1; i++){
-                if (x[5*(i+1) - i].nodeName == 'BUTTON' || x[5*(i+1) - i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
+                if (x[5*(i+1) - i].nodeName == 'BUTTON' || x[5*(i+1) - i].innerHTML == '' || x[5*(i+1) - i].childNodes[0].src != "http://127.0.0.1:3000/" + characterIcons[7]){
                     console.log("i've broken" + (5*i) + " " + i);
                     break;
                 }

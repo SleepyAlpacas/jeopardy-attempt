@@ -1,0 +1,7 @@
+{
+    "name": "jeopardy-socket",
+    "version": "0.0.1",
+    "description": "room, buzzer, and final jeopardy control for online play",
+    "dependencies": {}
+
+}
