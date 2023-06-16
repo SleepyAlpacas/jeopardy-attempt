@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script defer src="joingame.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #host-controls{display:none;}
+        #player-controls{display:none;}
+        #character-select{display:none;}
+    </style>
+</head>
+<body>
+    <div id="room-menu">
+        <input id="create-roomid" maxlength="5" placeholder="Room ID">
+        <button onclick="createRoom()" id="create-button">Create Room</button>
+        <br>
+        <br>
+        <input id="join-roomid" maxlength="5" placeholder="Room ID">
+        <button onclick="joinRoom()" id="join-button">Join Room</button>
+    </div>
+    <div id="host-controls">
+        <button onclick="correctAnswer()">correct</button>
+        <button onclick="incorrectAnswer()">incorrect</button>
+    </div>
+    <div id="player-controls">
+        <button onclick="buzz()" id="buzzer">buzz</button>
+    </div>
+    <div id="display-room">
+
+    </div>
+
+    <div id="character-select">
+        <h1 id="character-select-header">Player 1 Select Your Character</h1>
+        <div class="break"></div>
+        <button onclick="setPlayerCharacter(0)" class="character">
+            
+            <h1 class="character-name">Mr. Happy</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Mr._Happy.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">Big Smile :)</p>
+
+                    <p class="character-info-text red-text">no benefits</p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(1)" class="character">
+            <h1 class="character-name">Mr. Bump</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Bump2.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text orange-text">
+                        Once per game power. Activate to have a 50% chance of doubling your money, 40% chance of losing all your money, 10% chance of spreading money evenly across all players
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(2)" class="character">
+            <h1 class="character-name">Mr. Nosey</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Mr-nosey-5a.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Three per game power. Activate after buzzing to ask another player what the answer is.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(3)" class="character">
+            <h1 class="character-name">Mr. Clever</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Mr_Clever-6A.PNG.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Gain a win streak bonus of $50 per question.
+                    </p>
+                    <p class="character-info-text red-text">
+                        Lose 50% more money on incorrect answers.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(4)" class="character">
+            <h1 class="character-name">Little Miss Bossy</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Littlemissbossy.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Once per game power. After buzzing, force another player to answer a question.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(5)" class="character">
+            <h1 class="character-name">Little Miss Lucky</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Lucky1.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text orange-text">
+                        Correct answers give a random amount of money from -200 to 500
+                    </p>
+                </div>
+            </div>
+            
+        </button>
+        <button onclick="setPlayerCharacter(6)" class="character">
+            <h1 class="character-name">Mr. Wrong</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="MR_WRONG_2A.PNG.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Lose 50% less money on wrong answers
+                    </p>
+                    <p class="character-info-text red-text">
+                        Gain 25% less money on correct answers 
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(7)" class="character">
+            <h1 class="character-name">Little Miss Twins</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Little_Miss_Twins4.PNG.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Getting a bingo on the jeopardy board gives you a bonus of $2500
+                    </p>
+                </div>
+            </div>
+        </button>
+    </div>
+</body>
+</html>
