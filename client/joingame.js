@@ -1,26 +1,21 @@
 const socket = io('ws://localhost:8080');
 var room;
-var playerNum;
+var playerNum; //0 indexed
 var buzzedPlayers = [];
 
-socket.on('create success', room => {
-    document.getElementById('room-menu').style.display = 'none';
-    const text = document.createElement('h1');
-    text.innerText = "Your room ID is " + room;
-    document.getElementById('display-room').appendChild(text);
-    document.getElementById('host-controls').style.display = 'block';
-});
-socket.on('create fail', room => {
-    alert("room " + room + " already exists");
-});
+
 socket.on('join success', ({room, player}) => {
     document.getElementById('room-menu').style.display = 'none';
+    /*
     const text = document.createElement('h1');
     text.innerText = "You are player " + player;
-    playerNum = player - 1;
     document.getElementById('display-room').appendChild(text);
-    document.getElementById('player-controls').style.display = 'block';
+    */
+    playerNum = player - 1;
+    //document.getElementById('player-controls').style.display = 'block';
+
     document.getElementById('character-select').style.display = 'flex';
+    document.getElementById('character-select-header').innerHTML = "Player " + player + " Select Your Character"
 });
 socket.on('join fail', room=> {
     alert("room " + room + " doesn't exist");
@@ -42,10 +37,6 @@ socket.on('incorrect answer', ()=>{
     }
 })
 
-function createRoom(){
-    room = document.getElementById('create-roomid').value;
-    socket.emit('create room', room);
-}
 
 function joinRoom(){
     room = document.getElementById('join-roomid').value;
@@ -53,7 +44,7 @@ function joinRoom(){
 }
 
 function buzz(){
-    socket.emit('buzz', playerNum);
+    socket.emit('buzz', ({playerNum, room}));
 }
 
 function disableBuzzer(){
@@ -75,4 +66,5 @@ function incorrectAnswer(){
 function setPlayerCharacter(characterNum){
     document.getElementById('character-select').style.display = "none";
     socket.emit('character select', ({characterNum, playerNum}));
+    document.getElementById('player-controls').style.display="flex";
 }

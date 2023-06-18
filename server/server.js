@@ -7,6 +7,10 @@ io.on('connection', (socket)=>{
     console.log(socket.id);
 
     socket.on('create room', (room) => {
+        if (!room) {
+            socket.emit('create fail', room);
+            return;
+        }
         if (!io.sockets.adapter.rooms.get(room)){
             socket.join(room);
             socket.emit('create success', room);
@@ -17,8 +21,12 @@ io.on('connection', (socket)=>{
     });
 
     socket.on('join room', (room) => {
-        console.log(io.sockets.adapter.rooms.get(room).size);
+        if (!room) {
+            socket.emit('join fail', room);
+            return;
+        }
         if (io.sockets.adapter.rooms.get(room)){
+            console.log(io.sockets.adapter.rooms.get(room).size);
             let player = io.sockets.adapter.rooms.get(room).size;
             socket.join(room);
             socket.emit('join success', ({room, player}));
@@ -28,8 +36,8 @@ io.on('connection', (socket)=>{
         }
     });
 
-    socket.on('buzz', (playerNumber) => {
-        io.emit('buzz', playerNumber);
+    socket.on('buzz', ({playerNum, room}) => {
+        io.to(room).emit('buzz', playerNum);
     });
 
     socket.on('correct answer', () =>{

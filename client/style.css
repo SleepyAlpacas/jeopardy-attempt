@@ -3,9 +3,23 @@
     height: 0;
 }
 
+#room-menu{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+#room-menu > *{
+    margin: 1vw;
+}
+
+
+
 #character-select{
     height: 73vh;
-    display:flex;
+    display:none; /*flex*/
     align-items: flex-start;
     align-content: space-around;
     justify-content: space-around;
@@ -158,11 +172,11 @@
 
 /*players*/
 
-.players{
+#players{
     border: 5px solid blue;
     height: 27vh;
     margin: 0;
-    display: flex;
+    display: none; /*flex*/
     justify-content: space-around;
 }
 
@@ -183,4 +197,23 @@
 
 .power-button{
     display:none;
+}
+
+
+/* for joingame */
+#buzzer{
+    height: 50vh;
+    width: 50vh;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, gray, red 400px, gray 800px);
+    background-size: 800px 100%;
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    font-size: 400%;
+}
+#player-controls{
+    display:none; /*flex*/
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }

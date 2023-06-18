@@ -217,7 +217,7 @@ function setPlayerCharacter(characterNum, playerNum){
 }
 
 function initCharacter(characterNum, playerNum){
-    document.getElementsByClassName('player-icon')[playerNum].src = characterIcons[playerNum];
+    document.getElementsByClassName('player-icon')[playerNum].src = characterIcons[characterNum];
     playerCharacters[playerNum] = characterNum;
     if (characterNum == 5){
         playerCorrectModifier[playerNum] = 0;
@@ -371,8 +371,34 @@ function checkActivePowerVisibility(){
 
 //Server Stuff
 const socket = io('ws://localhost:8080');
-socket.on('character select', ({characterNum, playerNum}) => {
-    console.log(characterNum + " " + playerNum);
-    setPlayerCharacter(characterNum, playerNum);
-    console.log("HEY");
+var room;
+var buzzedPlayers = [];
+
+socket.on('create success', room => {
+    document.getElementById('room-menu').style.display = 'none';
+    document.getElementById('character-select').style.display = 'flex';
+    document.getElementById('players').style.display = 'flex';
+    const text = document.createElement('h1');
+    text.innerText = "Your room ID is " + room;
+    document.getElementById('character-select').appendChild(text);
+    //document.getElementById('host-controls').style.display = 'block';
 });
+socket.on('create fail', room => {
+    alert("room " + room + " already exists");
+});
+
+socket.on('character select', ({characterNum, playerNum}) => {
+    setPlayerCharacter(characterNum, playerNum);
+});
+
+socket.on('buzz', playerNum => {
+    document.getElementsByClassName('player')[playerNum].style.border = "5px solid red";
+    //alert("player " + (playerNum+1) + " Buzzed!");
+    console.log(playerNum + "THIS IS THE PLAYER NUMBER");
+    buzzedPlayers.push(playerNum);
+});
+
+function createRoom(){
+    room = document.getElementById('create-roomid').value;
+    socket.emit('create room', room);
+}
