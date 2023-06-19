@@ -48,11 +48,20 @@ io.on('connection', (socket)=>{
         io.emit('incorrect answer');
     });
 
+    socket.on('disable buzzer', (room) => {
+        io.to(room).emit('disable buzzer');
+    });
+
+    socket.on('enable valid buzzer', ({room, buzzedPlayers}) => {
+        io.to(room).emit('enable valid buzzer', buzzedPlayers);
+    });
+
     socket.on('character select', ({characterNum, playerNum}) => {
         console.log(characterNum + " " + playerNum);
         console.log("HEY");
         io.emit('character select', ({characterNum, playerNum}));
     });
+
 });
 
 http.listen(8080, () => console.log('listening on 8080'));

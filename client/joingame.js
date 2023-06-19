@@ -1,7 +1,6 @@
 const socket = io('ws://localhost:8080');
 var room;
 var playerNum; //0 indexed
-var buzzedPlayers = [];
 
 
 socket.on('join success', ({room, player}) => {
@@ -20,11 +19,8 @@ socket.on('join success', ({room, player}) => {
 socket.on('join fail', room=> {
     alert("room " + room + " doesn't exist");
 });
-socket.on('buzz', playerNum => {
-    alert("player " + (playerNum+1) + " Buzzed!");
-    disableBuzzer();
-    buzzedPlayers.push(playerNum);
-});
+
+/*
 socket.on('correct answer', ()=>{
     alert("Player " + (buzzedPlayers[buzzedPlayers.length-1]+1) + " got it right");
     buzzedPlayers = [];
@@ -36,6 +32,20 @@ socket.on('incorrect answer', ()=>{
         enableBuzzer();
     }
 })
+*/
+socket.on('disable buzzer', () => {
+    disableBuzzer();
+});
+socket.on('enable valid buzzer', (buzzedPlayers) => {
+    if (!buzzedPlayers.includes(playerNum)){
+        enableBuzzer();
+    }
+});
+
+socket.on('buzz', playerNum => {
+    let snd = new Audio("test.mp3");
+    snd.play();
+});
 
 
 function joinRoom(){
@@ -67,4 +77,8 @@ function setPlayerCharacter(characterNum){
     document.getElementById('character-select').style.display = "none";
     socket.emit('character select', ({characterNum, playerNum}));
     document.getElementById('player-controls').style.display="flex";
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

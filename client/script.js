@@ -18,6 +18,10 @@ var playerCorrectBonus = [];
 var playerPowerUses = [];
 var correctPlayer = -1;
 
+const socket = io('ws://localhost:8080');
+var room;
+var buzzedPlayers = [];
+
 for (let i = 0; i < row; i++){
     questions[i] = [];
     answers[i] = [];
@@ -93,6 +97,7 @@ function showQuestion(row, col){
         x[i].lastElementChild.style.display = 'none';
     }
     checkActivePowerVisibility();
+    socket.emit('enable valid buzzer', ({room, buzzedPlayers}));
 }
 
 function loadQuestion(row, col){
@@ -142,9 +147,12 @@ function greyOutQuestion(){
 function correctAnswer(player){
     if (wagers.length != playerCount){
         correctPlayer = player;
+        buzzedPlayers = [];
+        socket.emit('disable buzzer', room);
         addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
         checkPowerCorrect(player);
         showAnswer();
+        document.getElementsByClassName('player')[player].style.border = "";
     }
     else{
         let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
@@ -158,6 +166,8 @@ function incorrectAnswer(player){
     if (wagers.length != playerCount){
         addMoney(player, -(currentQuestionMoney * playerIncorrectModifier[player]));
         checkPowerIncorrect(player);
+        socket.emit('enable valid buzzer', ({room, buzzedPlayers}));
+        document.getElementsByClassName('player')[player].style.border = "";
     }
     else{
         let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
@@ -210,9 +220,6 @@ function setPlayerCharacter(characterNum, playerNum){
         document.getElementById('board').style.display = 'block';
         checkActivePowerVisibility();
         
-    }
-    else{
-        document.getElementById('character-select-header').innerHTML = "Player " + (currentPlayerCount + 1) + " Select Your Character"
     }
 }
 
@@ -370,9 +377,8 @@ function checkActivePowerVisibility(){
 }
 
 //Server Stuff
-const socket = io('ws://localhost:8080');
-var room;
-var buzzedPlayers = [];
+
+
 
 socket.on('create success', room => {
     document.getElementById('room-menu').style.display = 'none';
@@ -396,9 +402,17 @@ socket.on('buzz', playerNum => {
     //alert("player " + (playerNum+1) + " Buzzed!");
     console.log(playerNum + "THIS IS THE PLAYER NUMBER");
     buzzedPlayers.push(playerNum);
+    socket.emit('disable buzzer', room);
+    
+    let snd = new Audio("test.mp3");
+    snd.play();
 });
 
 function createRoom(){
     room = document.getElementById('create-roomid').value;
     socket.emit('create room', room);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
