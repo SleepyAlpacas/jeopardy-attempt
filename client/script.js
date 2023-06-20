@@ -376,6 +376,25 @@ function checkActivePowerVisibility(){
     }
 }
 
+async function powerPopUp(){
+    let tempDiv = document.createElement("div");
+    tempDiv.id = "power-used";
+
+    let tempImg = document.createElement("img");
+    tempImg.src = "Lucky1.webp";
+    tempImg.className = "player-icon";
+    
+    let tempH1 = document.createElement("h1");
+    tempH1.innerText = "Has activated a power!";
+
+    tempDiv.append(tempImg);
+    tempDiv.append(tempH1);
+    document.body.append(tempDiv);
+
+    await sleep(3000);
+    tempDiv.remove();
+}
+
 //Server Stuff
 
 

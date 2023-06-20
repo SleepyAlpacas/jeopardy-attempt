@@ -107,6 +107,27 @@
     border: 1px solid black;
 }
 
+#power-used{
+    display: flex;
+    align-items: center;
+    width: 50vw;
+    column-gap: 1vw;
+    z-index: 9999;
+    position:absolute;
+    top: 30vh;
+    left: -50vw;
+    animation-name: power-used;
+    animation-duration: 3s;
+
+}
+
+@keyframes power-used {
+    0%{left: -50vw;}
+    20%{left: 33vw;}
+    80%{left: 33vw;}
+    100%{left: 100vw;}
+}
+
 /*questions*/
 #question-screen{
     height: 73vh;
