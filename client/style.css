@@ -118,7 +118,6 @@
     left: -50vw;
     animation-name: power-used;
     animation-duration: 3s;
-
 }
 
 @keyframes power-used {

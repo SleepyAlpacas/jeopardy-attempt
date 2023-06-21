@@ -427,6 +427,8 @@ socket.on('buzz', playerNum => {
     snd.play();
 });
 
+socket.on('power', ch)
+
 function createRoom(){
     room = document.getElementById('create-roomid').value;
     socket.emit('create room', room);

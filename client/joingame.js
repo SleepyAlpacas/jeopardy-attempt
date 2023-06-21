@@ -1,6 +1,8 @@
 const socket = io('ws://localhost:8080');
 var room;
 var playerNum; //0 indexed
+var characterNum;
+var playerPowerUses;
 
 
 socket.on('join success', ({room, player}) => {
@@ -74,10 +76,45 @@ function incorrectAnswer(){
 }
 
 function setPlayerCharacter(characterNum){
+    this.characterNum = characterNum;
+    initCharacter();
+    checkActivePowerVisibility();
+
     document.getElementById('character-select').style.display = "none";
     socket.emit('character select', ({characterNum, playerNum}));
+
+    document.getElementById('power-uses').innerHTML = "Uses: " + playerPowerUses;
     document.getElementById('player-controls').style.display="flex";
+
 }
+
+function initCharacter(){
+    if (characterNum == 1 || characterNum == 4){
+        playerPowerUses = 1;
+    }
+    else if (characterNum == 2){
+        playerPowerUses = 3;
+    }
+    else{
+        playerPowerUses = 0;
+    }
+}
+
+function checkActivePowerVisibility(){
+    if (playerPowerUses <= 0){
+        document.getElementById('power-div').style.display = 'none';
+    } 
+}
+
+function activatePower(){
+    
+}
+
+async function confetti() {
+    startConfetti();
+    await sleep(3000); 
+    stopConfetti();
+} 
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
