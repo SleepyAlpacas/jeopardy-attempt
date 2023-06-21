@@ -56,12 +56,19 @@ io.on('connection', (socket)=>{
         io.to(room).emit('enable valid buzzer', buzzedPlayers);
     });
 
-    socket.on('character select', ({characterNum, playerNum}) => {
+    socket.on('character select', ({characterNum, playerNum, room}) => {
         console.log(characterNum + " " + playerNum);
         console.log("HEY");
-        io.emit('character select', ({characterNum, playerNum}));
+        io.to(room).emit('character select', ({characterNum, playerNum}));
     });
 
+    socket.on('power', ({characterNum, room}) =>{
+        io.to(room).emit('power', characterNum);
+    });
+
+    socket.on('game state', ({gameState, room}) => {
+        io.to(room).emit('game state', gameState);
+    });
 });
 
 http.listen(8080, () => console.log('listening on 8080'));

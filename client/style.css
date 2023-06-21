@@ -110,6 +110,7 @@
 #power-used{
     display: flex;
     align-items: center;
+    background-color: white;
     width: 50vw;
     column-gap: 1vw;
     z-index: 9999;
@@ -250,6 +251,9 @@
     background-repeat: no-repeat;
     font-size: 350%;
     color:lightblue
+}
+#power-button:disabled{
+    background-image: none;
 }
 
 #power-uses{

@@ -97,6 +97,7 @@ function showQuestion(row, col){
         x[i].lastElementChild.style.display = 'none';
     }
     checkActivePowerVisibility();
+    sendGameState();
     socket.emit('enable valid buzzer', ({room, buzzedPlayers}));
 }
 
@@ -109,6 +110,8 @@ function loadQuestion(row, col){
 }
 
 function showAnswer(){
+    buzzedPlayers = [];
+    socket.emit('disable buzzer', room);
     document.getElementById('question-screen').style.display = 'none';
     document.getElementById('answer-screen').style.display = 'flex';
     let x = document.getElementsByClassName('buttons');
@@ -124,6 +127,7 @@ function showBoard(){
         greyOutQuestion();
         document.getElementById('board').style.display = 'block';
         checkActivePowerVisibility();
+        sendGameState();
     }
     else{
         document.getElementById('final-jeopardy-wager').style.display = 'flex';
@@ -147,8 +151,6 @@ function greyOutQuestion(){
 function correctAnswer(player){
     if (wagers.length != playerCount){
         correctPlayer = player;
-        buzzedPlayers = [];
-        socket.emit('disable buzzer', room);
         addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
         checkPowerCorrect(player);
         showAnswer();
@@ -219,7 +221,7 @@ function setPlayerCharacter(characterNum, playerNum){
         document.getElementById('character-select').style.display = 'none';
         document.getElementById('board').style.display = 'block';
         checkActivePowerVisibility();
-        
+        sendGameState();
     }
 }
 
@@ -376,12 +378,23 @@ function checkActivePowerVisibility(){
     }
 }
 
-async function powerPopUp(){
+function sendGameState(){
+    let gameState;
+    if (document.getElementById('board').style.display == 'none'){
+        gameState = 'question';
+    }
+    else{
+        gameState = 'board'
+    }
+    socket.emit('game state', ({gameState, room}));
+}
+
+async function powerPopUp(characterNum){
     let tempDiv = document.createElement("div");
     tempDiv.id = "power-used";
 
     let tempImg = document.createElement("img");
-    tempImg.src = "Lucky1.webp";
+    tempImg.src = characterIcons[characterNum];
     tempImg.className = "player-icon";
     
     let tempH1 = document.createElement("h1");
@@ -427,7 +440,9 @@ socket.on('buzz', playerNum => {
     snd.play();
 });
 
-socket.on('power', ch)
+socket.on('power', characterNum => {
+    powerPopUp(characterNum);
+});
 
 function createRoom(){
     room = document.getElementById('create-roomid').value;

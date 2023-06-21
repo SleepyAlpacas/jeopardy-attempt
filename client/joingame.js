@@ -42,12 +42,22 @@ socket.on('enable valid buzzer', (buzzedPlayers) => {
     if (!buzzedPlayers.includes(playerNum)){
         enableBuzzer();
     }
+    else{
+        checkActivePowerDisabled('answer');
+    }
 });
 
 socket.on('buzz', playerNum => {
     let snd = new Audio("test.mp3");
     snd.play();
+    if (playerNum == this.playerNum){
+        checkActivePowerDisabled('buzz');
+    }
 });
+
+socket.on('game state', gameState => {
+    checkActivePowerDisabled(gameState);
+})
 
 
 function joinRoom(){
@@ -81,9 +91,8 @@ function setPlayerCharacter(characterNum){
     checkActivePowerVisibility();
 
     document.getElementById('character-select').style.display = "none";
-    socket.emit('character select', ({characterNum, playerNum}));
+    socket.emit('character select', ({characterNum, playerNum, room}));
 
-    document.getElementById('power-uses').innerHTML = "Uses: " + playerPowerUses;
     document.getElementById('player-controls').style.display="flex";
 
 }
@@ -104,10 +113,40 @@ function checkActivePowerVisibility(){
     if (playerPowerUses <= 0){
         document.getElementById('power-div').style.display = 'none';
     } 
+    else{
+        document.getElementById('power-uses').innerHTML = "Uses: " + playerPowerUses;
+    }
+}
+
+function checkActivePowerDisabled(gameState){
+    if (playerPowerUses <= 0){
+        return;
+    }
+
+    console.log(gameState);
+    let powerButton = document.getElementById('power-button');
+    if (characterNum == 1){
+        if (gameState == 'board'){
+            powerButton.disabled = false;
+        }
+        else {
+            powerButton.disabled = true;
+        }
+    }
+    else if (characterNum == 2 || characterNum == 4){
+        if (gameState == 'buzz'){
+            powerButton.disabled = false;
+        }
+        else {
+            powerButton.disabled = true;
+        }
+    }
 }
 
 function activatePower(){
-    
+    socket.emit('power', ({characterNum, room}));
+    playerPowerUses--;
+    checkActivePowerVisibility();
 }
 
 async function confetti() {
