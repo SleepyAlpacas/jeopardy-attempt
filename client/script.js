@@ -112,12 +112,15 @@ function loadQuestion(row, col){
 function showAnswer(){
     buzzedPlayers = [];
     socket.emit('disable buzzer', room);
+    let gameState = 'answer';
+    socket.emit('game state', ({gameState, room}));
     document.getElementById('question-screen').style.display = 'none';
     document.getElementById('answer-screen').style.display = 'flex';
     let x = document.getElementsByClassName('buttons');
     for (let i = 0; i < x.length; i++){
         x[i].style.display = "none";
     }
+    removeBorder();
 }
 
 function showBoard(){
@@ -154,7 +157,7 @@ function correctAnswer(player){
         addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
         checkPowerCorrect(player);
         showAnswer();
-        document.getElementsByClassName('player')[player].style.border = "";
+
     }
     else{
         let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
@@ -169,7 +172,7 @@ function incorrectAnswer(player){
         addMoney(player, -(currentQuestionMoney * playerIncorrectModifier[player]));
         checkPowerIncorrect(player);
         socket.emit('enable valid buzzer', ({room, buzzedPlayers}));
-        document.getElementsByClassName('player')[player].style.border = "";
+        removeBorder();
     }
     else{
         let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
@@ -179,10 +182,12 @@ function incorrectAnswer(player){
     }
 }
 
-function addMoney(player, amount){
+function addMoney(playerNum, amount){
     let x = document.getElementsByClassName('money');
-    let currentMoney = parseInt(x[player].innerHTML);
-    x[player].innerHTML = currentMoney + amount + "$";
+    let currentMoney = parseInt(x[playerNum].innerHTML.slice(1));
+    let money = currentMoney + amount;
+    x[playerNum].innerHTML = "$" + money;
+    socket.emit('update money', ({playerNum, money, room}));
 }
 
 function submitWager(){
@@ -329,7 +334,10 @@ function checkPowerIncorrect(player){
 }
 
 function useActivePower(player){
-    if (playerCharacters[player] == 1){
+    if (playerCharacters[player] == 0){
+        confetti();
+    }
+    else if (playerCharacters[player] == 1){
         let random = Math.random();
         if (random <= 0.5){
             addMoney(player, parseInt(document.getElementsByClassName('money')[player].innerHTML));
@@ -346,10 +354,6 @@ function useActivePower(player){
         }
         document.getElementsByClassName('buttons')[player].style.display = 'none';
         $(".buttons").eq(player).children().css("display","inline-block");
-    }
-    playerPowerUses[player]--;
-    if (playerPowerUses[player] == 0) {
-        document.getElementsByClassName('power-button')[player].style.display = 'none';
     }
 }
 
@@ -389,7 +393,7 @@ function sendGameState(){
     socket.emit('game state', ({gameState, room}));
 }
 
-async function powerPopUp(characterNum){
+async function powerPopUp(characterNum, playerNum){
     let tempDiv = document.createElement("div");
     tempDiv.id = "power-used";
 
@@ -398,7 +402,7 @@ async function powerPopUp(characterNum){
     tempImg.className = "player-icon";
     
     let tempH1 = document.createElement("h1");
-    tempH1.innerText = "Has activated a power!";
+    tempH1.innerText = "Player " + (playerNum + 1) + " has activated a power!";
 
     tempDiv.append(tempImg);
     tempDiv.append(tempH1);
@@ -406,6 +410,19 @@ async function powerPopUp(characterNum){
 
     await sleep(3000);
     tempDiv.remove();
+}
+
+async function confetti() {
+    startConfetti();
+    await sleep(3000); 
+    stopConfetti();
+} 
+
+function removeBorder(){
+    let players = document.getElementsByClassName('player');
+    for (let x = 0; x < playerCount; x++){
+        players[x].style.border = "";
+    }
 }
 
 //Server Stuff
@@ -440,9 +457,14 @@ socket.on('buzz', playerNum => {
     snd.play();
 });
 
-socket.on('power', characterNum => {
-    powerPopUp(characterNum);
+socket.on('power', ({characterNum, playerNum}) => {
+    if (characterNum != 0){
+        powerPopUp(characterNum, playerNum);
+    }
+    useActivePower(playerNum);
 });
+
+
 
 function createRoom(){
     room = document.getElementById('create-roomid').value;

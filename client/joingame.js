@@ -59,6 +59,12 @@ socket.on('game state', gameState => {
     checkActivePowerDisabled(gameState);
 })
 
+socket.on('update money', ({playerNum, money}) => {
+    console.log(playerNum);
+    if (playerNum == this.playerNum){
+        document.getElementById('money').innerHTML = "$" + money;
+    }
+});
 
 function joinRoom(){
     room = document.getElementById('join-roomid').value;
@@ -98,7 +104,11 @@ function setPlayerCharacter(characterNum){
 }
 
 function initCharacter(){
-    if (characterNum == 1 || characterNum == 4){
+    if (characterNum == 0){
+        playerPowerUses = 1000;
+        document.getElementById('power-uses').style.display = 'none';
+    }
+    else if (characterNum == 1 || characterNum == 4){
         playerPowerUses = 1;
     }
     else if (characterNum == 2){
@@ -144,16 +154,27 @@ function checkActivePowerDisabled(gameState){
 }
 
 function activatePower(){
-    socket.emit('power', ({characterNum, room}));
+    socket.emit('power', ({characterNum, playerNum, room}));
     playerPowerUses--;
     checkActivePowerVisibility();
+
+    if (characterNum == 0){
+        confettiTimeout();
+    }
 }
 
 async function confetti() {
     startConfetti();
     await sleep(3000); 
     stopConfetti();
-} 
+}
+
+async function confettiTimeout(){
+    let powerButton = document.getElementById('power-button');
+    powerButton.disabled = true;
+    await sleep(60000);
+    powerButton.disabled = false;
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

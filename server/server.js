@@ -62,12 +62,16 @@ io.on('connection', (socket)=>{
         io.to(room).emit('character select', ({characterNum, playerNum}));
     });
 
-    socket.on('power', ({characterNum, room}) =>{
-        io.to(room).emit('power', characterNum);
+    socket.on('power', ({characterNum, playerNum, room}) =>{
+        io.to(room).emit('power', ({characterNum, playerNum}));
     });
 
     socket.on('game state', ({gameState, room}) => {
         io.to(room).emit('game state', gameState);
+    });
+
+    socket.on('update money', ({playerNum, money, room}) => {
+        io.to(room).emit('update money', ({playerNum, money}));
     });
 });
 
