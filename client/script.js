@@ -223,7 +223,10 @@ function setPlayerCharacter(characterNum, playerNum){
     initCharacter(characterNum, playerNum);
     currentPlayerCount++;
     if (currentPlayerCount == playerCount) {
-        document.getElementById('character-select').style.display = 'none';
+        let pages = document.getElementsByClassName('character-select');
+        for (let i = 0; i < pages.length; i++){
+            pages[i].style.display = 'none';
+        }
         document.getElementById('board').style.display = 'block';
         checkActivePowerVisibility();
         sendGameState();
@@ -339,17 +342,17 @@ function useActivePower(player){
     }
     else if (playerCharacters[player] == 1){
         let random = Math.random();
+        let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
         if (random <= 0.5){
-            addMoney(player, parseInt(document.getElementsByClassName('money')[player].innerHTML));
+            addMoney(player, money);
         }
         else if (random <= 0.9){
-            addMoney(player, -parseInt(document.getElementsByClassName('money')[player].innerHTML));
+            addMoney(player, -money);
         }
         else{
-            let totalMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
-            addMoney(player, -parseInt(document.getElementsByClassName('money')[player].innerHTML));
+            addMoney(player, -money);
             for (let i = 0; i < playerCount; i++){
-                addMoney(i, Math.floor(totalMoney/playerCount));
+                addMoney(i, Math.floor(money/playerCount));
             }
         }
         document.getElementsByClassName('buttons')[player].style.display = 'none';
@@ -425,17 +428,44 @@ function removeBorder(){
     }
 }
 
+function nextPage(){
+    let pages = document.getElementsByClassName('character-select');
+    for (let i = 0; i < pages.length - 1; i++){
+        if (pages[i].style.display == 'flex'){
+            pages[i].style.display = 'none';
+            pages[i+1].style.display = 'flex';
+            break;
+        }
+    }
+}
+
+function backPage(){
+    let pages = document.getElementsByClassName('character-select');
+    for (let i = 1; i < pages.length; i++){
+        if (pages[i].style.display == 'flex'){
+            pages[i].style.display = 'none';
+            pages[i-1].style.display = 'flex';
+            break;
+        }
+    }
+}
+
 //Server Stuff
 
 
 
 socket.on('create success', room => {
     document.getElementById('room-menu').style.display = 'none';
-    document.getElementById('character-select').style.display = 'flex';
+    document.getElementById('character-page-1').style.display = 'flex';
     document.getElementById('players').style.display = 'flex';
-    const text = document.createElement('h1');
-    text.innerText = "Your room ID is " + room;
-    document.getElementById('character-select').appendChild(text);
+    
+
+    let temp = document.getElementsByClassName('character-select');
+    for (let i = 0; i < temp.length; i++){
+        let text = document.createElement('h1');
+        text.innerText = "Your room ID is " + room;
+        temp[i].appendChild(text);
+    }
     //document.getElementById('host-controls').style.display = 'block';
 });
 socket.on('create fail', room => {

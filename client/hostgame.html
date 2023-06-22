@@ -15,12 +15,12 @@
     <link rel="icon" href="favicon.ico?">
 </head>
 <style>
-    #room-menu{
+    /*#room-menu{
         display: none;
     }
-    #character-select{
+    #character-page-1{
         display: flex;
-    }
+    }*/
 </style>
 <body>
 
@@ -99,8 +99,118 @@
         <img id="winner-icon">
     </div>
 
-    <div id="character-select">
-        <h1 id="character-select-header">Select Your Character</h1>
+    <div id= "character-page-1" class="character-select">
+        <button class="next-button" onclick="nextPage()"><h1 style="font-size: 300%">&#8250</h1></button>
+        <h1 class="character-select-header">Select Your Character</h1>
+        <div class="break"></div>
+        <button class="character">
+            <h1 class="character-name">Mr. Happy</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Mr._Happy.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">Big Smile :)</p>
+
+                    <p class="character-info-text red-text">no benefits</p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Mr. Bump</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Bump2.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text orange-text">
+                        Once per game power. Activate to have a 50% chance of doubling your money, 40% chance of losing all your money, 10% chance of spreading money evenly across all players
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Mr. Nosey</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Mr-nosey-5a.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Three per game power. Activate after buzzing to ask another player what the answer is.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Mr. Clever</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Mr_Clever-6A.PNG.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Gain a win streak bonus of $50 per question.
+                    </p>
+                    <p class="character-info-text red-text">
+                        Lose 50% more money on incorrect answers.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Little Miss Bossy</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Littlemissbossy.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Once per game power. After buzzing, force another player to answer a question.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Little Miss Lucky</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Lucky1.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text orange-text">
+                        Correct answers give a random amount of money from -200 to 500
+                    </p>
+                </div>
+            </div>
+            
+        </button>
+        <button class="character">
+            <h1 class="character-name">Mr. Wrong</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="MR_WRONG_2A.PNG.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Lose 50% less money on wrong answers
+                    </p>
+                    <p class="character-info-text red-text">
+                        Gain 25% less money on correct answers 
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Little Miss Twins</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="Little_Miss_Twins4.PNG.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Getting a bingo on the jeopardy board gives you a bonus of $2500
+                    </p>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <div id= "character-page-2" class="character-select">
+        <button class="back-button" onclick="backPage()"><h1 style="font-size: 300%">&#8249</h1></button>
+        <h1 class="character-select-header">Select Your Character 2</h1>
         <div class="break"></div>
         <button class="character">
             <h1 class="character-name">Mr. Happy</h1>

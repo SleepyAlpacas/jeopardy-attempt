@@ -17,7 +17,7 @@
 
 
 
-#character-select{
+.character-select{
     height: 73vh;
     display:none; /*flex*/
     align-items: flex-start;
@@ -75,11 +75,31 @@
     color: orange;
 }
 
-
-
 .character-icon{
     max-width: 80%;
     max-height: 70%;
+}
+
+.next-button{
+    position:fixed;
+    text-align: center;
+    text-justify: center;
+    top: 37vh;
+    right:0;
+    height: 10vh;
+    width: 5vw;
+    z-index: 5;
+}
+
+.back-button{
+    position:fixed;
+    text-align: center;
+    text-justify: center;
+    top: 37vh;
+    left: 0;
+    height: 10vh;
+    width: 5vw;
+    z-index: 5;
 }
 
 /*board stuff*/

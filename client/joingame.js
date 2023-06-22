@@ -15,8 +15,12 @@ socket.on('join success', ({room, player}) => {
     playerNum = player - 1;
     //document.getElementById('player-controls').style.display = 'block';
 
-    document.getElementById('character-select').style.display = 'flex';
-    document.getElementById('character-select-header').innerHTML = "Player " + player + " Select Your Character"
+    document.getElementById('character-page-1').style.display = 'flex';
+    
+    let headers = document.getElementsByClassName('character-select-header');
+    for (let i = 0; i < headers.length; i++){
+        headers[i].innerHTML = "Player " + player + " Select Your Character";
+    }
 });
 socket.on('join fail', room=> {
     alert("room " + room + " doesn't exist");
@@ -96,7 +100,10 @@ function setPlayerCharacter(characterNum){
     initCharacter();
     checkActivePowerVisibility();
 
-    document.getElementById('character-select').style.display = "none";
+    let pages = document.getElementsByClassName('character-select');
+    for (let i = 0; i < pages.length; i++){
+        pages[i].style.display = "none";
+    }
     socket.emit('character select', ({characterNum, playerNum, room}));
 
     document.getElementById('player-controls').style.display="flex";
@@ -160,6 +167,28 @@ function activatePower(){
 
     if (characterNum == 0){
         confettiTimeout();
+    }
+}
+
+function nextPage(){
+    let pages = document.getElementsByClassName('character-select');
+    for (let i = 0; i < pages.length - 1; i++){
+        if (pages[i].style.display == 'flex'){
+            pages[i].style.display = 'none';
+            pages[i+1].style.display = 'flex';
+            break;
+        }
+    }
+}
+
+function backPage(){
+    let pages = document.getElementsByClassName('character-select');
+    for (let i = 1; i < pages.length; i++){
+        if (pages[i].style.display == 'flex'){
+            pages[i].style.display = 'none';
+            pages[i-1].style.display = 'flex';
+            break;
+        }
     }
 }
 
