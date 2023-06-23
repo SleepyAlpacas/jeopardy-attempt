@@ -3,7 +3,13 @@ var room;
 var playerNum; //0 indexed
 var characterNum;
 var playerPowerUses;
+var buzzerNum;
+var buzzerPath = 'buzzers/';
+var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3'];
 
+for (let i = 0; i < buzzerFiles.length; i++){
+    buzzerFiles[i] = buzzerPath + buzzerFiles[i];
+}
 
 socket.on('join success', ({room, player}) => {
     document.getElementById('room-menu').style.display = 'none';
@@ -51,8 +57,8 @@ socket.on('enable valid buzzer', (buzzedPlayers) => {
     }
 });
 
-socket.on('buzz', playerNum => {
-    let snd = new Audio("test.mp3");
+socket.on('buzz', ({playerNum, buzzerNum}) => {
+    let snd = new Audio(buzzerFiles[buzzerNum]);
     snd.play();
     if (playerNum == this.playerNum){
         checkActivePowerDisabled('buzz');
@@ -76,7 +82,7 @@ function joinRoom(){
 }
 
 function buzz(){
-    socket.emit('buzz', ({playerNum, room}));
+    socket.emit('buzz', ({playerNum, buzzerNum, room}));
 }
 
 function disableBuzzer(){
@@ -104,10 +110,20 @@ function setPlayerCharacter(characterNum){
     for (let i = 0; i < pages.length; i++){
         pages[i].style.display = "none";
     }
-    socket.emit('character select', ({characterNum, playerNum, room}));
+
+    document.getElementById('buzzer-page-1').style.display="flex";
+}
+
+function setBuzzerNum(buzzerNum){
+    this.buzzerNum = buzzerNum;
+    socket.emit('character select', ({characterNum, buzzerNum, playerNum, room}));
+
+    let pages = document.getElementsByClassName('buzzer-select');
+    for (let i = 0; i < pages.length; i++){
+        pages[i].style.display = "none";
+    }
 
     document.getElementById('player-controls').style.display="flex";
-
 }
 
 function initCharacter(){

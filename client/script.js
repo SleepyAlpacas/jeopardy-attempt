@@ -10,8 +10,12 @@ var playerCount = 4;
 var currentPlayerCount = 0;
 var wagers = [];
 var moneyAfterWagers = [];
+var characterIconsPath = "images/";
 var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp'];
+var buzzerPath = "buzzers/";
+var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3'];
 var playerCharacters = [];
+var playerBuzzers = [];
 var playerCorrectModifier = [];
 var playerIncorrectModifier = [];
 var playerCorrectBonus = [];
@@ -25,6 +29,13 @@ var buzzedPlayers = [];
 for (let i = 0; i < row; i++){
     questions[i] = [];
     answers[i] = [];
+}
+
+for (let i = 0; i < buzzerFiles.length; i++){
+    buzzerFiles[i] = buzzerPath + buzzerFiles[i];
+}
+for (let i = 0; i < characterIcons.length; i++){
+    characterIcons[i] = characterIconsPath + characterIcons[i];
 }
 
 for (let i = 0; i < col; i++){
@@ -360,30 +371,6 @@ function useActivePower(player){
     }
 }
 
-function checkActivePowerVisibility(){
-    for (let player = 0; player < playerCount; player++){
-        if (playerPowerUses[player] == 0) continue;
-        else if (playerCharacters[player] == 1){
-            if (document.getElementById('board').style.display == 'none'){
-                $(".buttons").eq(player).children().css("display","inline-block");
-                document.getElementsByClassName('power-button')[player].style.display = 'none';
-            }
-            else{
-                document.getElementsByClassName('buttons')[player].style.display = 'block';
-                $(".buttons").eq(player).children().css("display","none");
-                document.getElementsByClassName('power-button')[player].style.display = 'inline-block';
-            }
-        }
-        else if (playerCharacters[player] == 2 || playerCharacters[player] == 4){
-            if (document.getElementById('question-screen').style.display != 'none'){
-                document.getElementsByClassName('power-button')[player].style.display = 'inline-block';
-            }
-            else{
-                document.getElementsByClassName('power-button')[player].style.display = 'none';
-            }
-        }
-    }
-}
 
 function sendGameState(){
     let gameState;
@@ -472,18 +459,17 @@ socket.on('create fail', room => {
     alert("room " + room + " already exists");
 });
 
-socket.on('character select', ({characterNum, playerNum}) => {
+socket.on('character select', ({characterNum, buzzerNum, playerNum}) => {
     setPlayerCharacter(characterNum, playerNum);
+    playerBuzzers[playerNum] = buzzerNum;
 });
 
-socket.on('buzz', playerNum => {
+socket.on('buzz', ({playerNum, buzzerNum}) => {
     document.getElementsByClassName('player')[playerNum].style.border = "5px solid red";
-    //alert("player " + (playerNum+1) + " Buzzed!");
-    console.log(playerNum + "THIS IS THE PLAYER NUMBER");
     buzzedPlayers.push(playerNum);
     socket.emit('disable buzzer', room);
     
-    let snd = new Audio("test.mp3");
+    let snd = new Audio(buzzerFiles[buzzerNum]);
     snd.play();
 });
 

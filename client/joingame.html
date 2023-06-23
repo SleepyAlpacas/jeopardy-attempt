@@ -13,8 +13,10 @@
     <link rel="stylesheet" href="style.css">
     <style>
         #host-controls{display:none;}
-        #character-select{display:none;}
-        /*#room-menu{display:none;}
+        
+        #room-menu{display:none;}
+        /*.buzzer-select{display:flex;}
+        
         #player-controls{display:flex;}
         */
         
@@ -43,7 +45,7 @@
 
     </div>
 
-    <div id="character-page-1" class="character-select">
+    <div id="character-page-1" class="menu-select character-select">
         <button class="next-button" onclick="nextPage()"><h1 style="font-size: 300%">&#8250</h1></button>
         <h1 class="character-select-header"></h1>
         <div class="break"></div>
@@ -51,7 +53,7 @@
             
             <h1 class="character-name">Mr. Happy</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr._Happy.webp">
+            <img class="character-icon" src="images/Mr._Happy.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">Big Smile :)</p>
@@ -63,7 +65,7 @@
         <button onclick="setPlayerCharacter(1)" class="character">
             <h1 class="character-name">Mr. Bump</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Bump2.webp">
+            <img class="character-icon" src="images/Bump2.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text orange-text">
@@ -75,7 +77,7 @@
         <button onclick="setPlayerCharacter(2)" class="character">
             <h1 class="character-name">Mr. Nosey</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr-nosey-5a.webp">
+            <img class="character-icon" src="images/Mr-nosey-5a.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -87,7 +89,7 @@
         <button onclick="setPlayerCharacter(3)" class="character">
             <h1 class="character-name">Mr. Clever</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr_Clever-6A.PNG.webp">
+            <img class="character-icon" src="images/Mr_Clever-6A.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -102,7 +104,7 @@
         <button onclick="setPlayerCharacter(4)" class="character">
             <h1 class="character-name">Little Miss Bossy</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Littlemissbossy.webp">
+            <img class="character-icon" src="images/Littlemissbossy.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -114,7 +116,7 @@
         <button onclick="setPlayerCharacter(5)" class="character">
             <h1 class="character-name">Little Miss Lucky</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Lucky1.webp">
+            <img class="character-icon" src="images/Lucky1.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text orange-text">
@@ -127,7 +129,7 @@
         <button onclick="setPlayerCharacter(6)" class="character">
             <h1 class="character-name">Mr. Wrong</h1>
             <div class="break"></div>
-            <img class="character-icon" src="MR_WRONG_2A.PNG.webp">
+            <img class="character-icon" src="images/MR_WRONG_2A.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -142,7 +144,7 @@
         <button onclick="setPlayerCharacter(7)" class="character">
             <h1 class="character-name">Little Miss Twins</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Little_Miss_Twins4.PNG.webp">
+            <img class="character-icon" src="images/Little_Miss_Twins4.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -153,7 +155,7 @@
         </button>
     </div>
 
-    <div id="character-page-2" class="character-select">
+    <div id="character-page-2" class="menu-select character-select">
         <button class="back-button" onclick="backPage()"><h1 style="font-size: 300%">&#8249</h1></button>
         <h1 class="character-select-header"></h1>
         <div class="break"></div>
@@ -161,7 +163,7 @@
             
             <h1 class="character-name">Mr. Happy</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr._Happy.webp">
+            <img class="character-icon" src="images/Mr._Happy.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">Big Smile :)</p>
@@ -173,7 +175,7 @@
         <button onclick="setPlayerCharacter(1)" class="character">
             <h1 class="character-name">Mr. Bump</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Bump2.webp">
+            <img class="character-icon" src="images/Bump2.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text orange-text">
@@ -185,7 +187,7 @@
         <button onclick="setPlayerCharacter(2)" class="character">
             <h1 class="character-name">Mr. Nosey</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr-nosey-5a.webp">
+            <img class="character-icon" src="images/Mr-nosey-5a.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -197,7 +199,7 @@
         <button onclick="setPlayerCharacter(3)" class="character">
             <h1 class="character-name">Mr. Clever</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr_Clever-6A.PNG.webp">
+            <img class="character-icon" src="images/Mr_Clever-6A.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -212,7 +214,7 @@
         <button onclick="setPlayerCharacter(4)" class="character">
             <h1 class="character-name">Little Miss Bossy</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Littlemissbossy.webp">
+            <img class="character-icon" src="images/Littlemissbossy.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -224,7 +226,7 @@
         <button onclick="setPlayerCharacter(5)" class="character">
             <h1 class="character-name">Little Miss Lucky</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Lucky1.webp">
+            <img class="character-icon" src="images/Lucky1.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text orange-text">
@@ -237,7 +239,7 @@
         <button onclick="setPlayerCharacter(6)" class="character">
             <h1 class="character-name">Mr. Wrong</h1>
             <div class="break"></div>
-            <img class="character-icon" src="MR_WRONG_2A.PNG.webp">
+            <img class="character-icon" src="images/MR_WRONG_2A.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -252,7 +254,7 @@
         <button onclick="setPlayerCharacter(7)" class="character">
             <h1 class="character-name">Little Miss Twins</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Little_Miss_Twins4.PNG.webp">
+            <img class="character-icon" src="images/Little_Miss_Twins4.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -261,6 +263,57 @@
                 </div>
             </div>
         </button>
+    </div>
+
+    <div id="buzzer-page-1" class="menu-select buzzer-select">
+        <h1 class="buzzer-select-header">Select a buzzer 🔊</h1>
+        <div class="break"></div>
+        <button onclick="setBuzzerNum(0)" class="character">
+            <h1 class="character-name">Dolphin</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Mr._Happy.webp">
+        <button onclick="setBuzzerNum(1)" class="character">
+            <h1 class="character-name">Flintmobile</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Bump2.webp">
+        </button>
+        <button onclick="setBuzzerNum(2)" class="character">
+            <h1 class="character-name">Subaluwa</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Mr-nosey-5a.webp">
+        </button>
+        <button onclick="setBuzzerNum(3)" class="character">
+            <h1 class="character-name">Headshake</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Mr_Clever-6A.PNG.webp">
+        </button>
+        <button onclick="setBuzzerNum(4)" class="character">
+            <h1 class="character-name">Pouring Water</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Littlemissbossy.webp">
+        </button>
+        <button onclick="setBuzzerNum(5)" class="character">
+            <h1 class="character-name">Thunder</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Lucky1.webp">
+        </button>
+        <button onclick="setBuzzerNum(6)" class="character">
+            <h1 class="character-name">Piano</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/MR_WRONG_2A.PNG.webp">
+        </button>
+        <button onclick="setBuzzerNum(7)" class="character">
+            <h1 class="character-name">G Note</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Little_Miss_Twins4.PNG.webp">
+        </button>
+    </div>
+
+    <div id="wager-screen">
+            <h1>Enter your Wager</h1>
+        <div class="break"></div>
+        <input id="wager-box" type="text">
+        <input type="submit" value="Submit Wager" class="btn-success btn">
     </div>
 </body>
 </html>

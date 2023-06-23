@@ -17,7 +17,7 @@
 
 
 
-.character-select{
+.menu-select{
     height: 73vh;
     display:none; /*flex*/
     align-items: flex-start;
@@ -195,9 +195,18 @@
 
 }
 
-.wager-box{
-    width: 10vw;
-    display:none;
+#wager-box{
+    width: 5vw;
+}
+
+#wager-screen{
+    display: flex;
+    height: 50vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 5vw;
 }
 
 /*win-screen*/

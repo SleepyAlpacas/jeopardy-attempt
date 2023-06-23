@@ -36,8 +36,8 @@ io.on('connection', (socket)=>{
         }
     });
 
-    socket.on('buzz', ({playerNum, room}) => {
-        io.to(room).emit('buzz', playerNum);
+    socket.on('buzz', ({playerNum, buzzerNum, room}) => {
+        io.to(room).emit('buzz', ({playerNum, buzzerNum}));
     });
 
     socket.on('correct answer', () =>{
@@ -56,10 +56,10 @@ io.on('connection', (socket)=>{
         io.to(room).emit('enable valid buzzer', buzzedPlayers);
     });
 
-    socket.on('character select', ({characterNum, playerNum, room}) => {
+    socket.on('character select', ({characterNum, buzzerNum, playerNum, room}) => {
         console.log(characterNum + " " + playerNum);
         console.log("HEY");
-        io.to(room).emit('character select', ({characterNum, playerNum}));
+        io.to(room).emit('character select', ({characterNum, buzzerNum, playerNum}));
     });
 
     socket.on('power', ({characterNum, playerNum, room}) =>{
