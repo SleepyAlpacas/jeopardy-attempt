@@ -73,6 +73,14 @@ io.on('connection', (socket)=>{
     socket.on('update money', ({playerNum, money, room}) => {
         io.to(room).emit('update money', ({playerNum, money}));
     });
+
+    socket.on('submit wager', ({playerNum, wagerAmount, room}) => {
+        io.to(room).emit('submit wager', ({playerNum, wagerAmount}));
+    });
+
+    socket.on('wager screen', room => {
+        io.to(room).emit('wager screen');
+    })
 });
 
 http.listen(8080, () => console.log('listening on 8080'));

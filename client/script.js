@@ -2,7 +2,7 @@ var questions = [];
 var answers = [];
 var row = 5;
 var col = 5;
-var numQuestions = row*col;
+var numQuestions = 1;
 var currentQuestionRow = 999;
 var currentQuestionCol = 99;
 var currentQuestionMoney = 0;
@@ -105,9 +105,7 @@ function showQuestion(row, col){
     let x = document.getElementsByClassName('buttons');
     for (let i = 0; i < x.length; i++){
         x[i].style.display = "block";
-        x[i].lastElementChild.style.display = 'none';
     }
-    checkActivePowerVisibility();
     sendGameState();
     socket.emit('enable valid buzzer', ({room, buzzedPlayers}));
 }
@@ -140,15 +138,11 @@ function showBoard(){
     if (numQuestions != 0){
         greyOutQuestion();
         document.getElementById('board').style.display = 'block';
-        checkActivePowerVisibility();
         sendGameState();
     }
     else{
         document.getElementById('final-jeopardy-wager').style.display = 'flex';
-        let x = document.getElementsByClassName('wager-box');
-        for (let i = 0; i < playerCount; i++){
-            x[i].style.display = 'block';
-        }
+        socket.emit('wager screen', room);
     }
 }
 
@@ -171,7 +165,7 @@ function correctAnswer(player){
 
     }
     else{
-        let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
+        let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
         document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney + wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
@@ -186,7 +180,7 @@ function incorrectAnswer(player){
         removeBorder();
     }
     else{
-        let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML);
+        let currentMoney = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
         document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney - wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
@@ -217,6 +211,14 @@ function submitWager(){
     showQuestion(0, col);
 }
 
+function calculateWager(playerNum, wagerAmount){
+    wagers[playerNum] = wagerAmount;
+    if (!wagers.includes(undefined) && wagers.length == playerCount){
+        document.getElementById('final-jeopardy-wager').style.display = 'none';
+        showQuestion(0, col);
+    }
+}
+
 function showWinScreen(){
     document.getElementById('win-screen').style.display = 'flex';
     document.getElementById('answer-screen').style.display = 'none';
@@ -239,7 +241,6 @@ function setPlayerCharacter(characterNum, playerNum){
             pages[i].style.display = 'none';
         }
         document.getElementById('board').style.display = 'block';
-        checkActivePowerVisibility();
         sendGameState();
     }
 }
@@ -271,16 +272,6 @@ function initCharacter(characterNum, playerNum){
     }
     else{
         playerCorrectBonus[playerNum] = 0;
-    }
-
-    if (characterNum == 1 || characterNum == 4){
-        playerPowerUses[playerNum] = 1;
-    }
-    else if (characterNum == 2){
-        playerPowerUses[playerNum] = 3;
-    }
-    else{
-        playerPowerUses[playerNum] = 0;
     }
 }
 
@@ -478,6 +469,10 @@ socket.on('power', ({characterNum, playerNum}) => {
         powerPopUp(characterNum, playerNum);
     }
     useActivePower(playerNum);
+});
+
+socket.on('submit wager', ({playerNum, wagerAmount}) => {
+    calculateWager(playerNum, wagerAmount);
 });
 
 

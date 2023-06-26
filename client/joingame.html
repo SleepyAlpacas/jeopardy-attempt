@@ -12,13 +12,14 @@
     <script defer src="joingame.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        #host-controls{display:none;}
+        /*#host-controls{display:none;}
         
         #room-menu{display:none;}
-        /*.buzzer-select{display:flex;}
+        .buzzer-select{display:flex;}
         
         #player-controls{display:flex;}
         */
+
         
 
     </style>
@@ -28,22 +29,14 @@
         <input id="join-roomid" maxlength="5" placeholder="Room ID">
         <button onclick="joinRoom()" id="join-button" class="btn btn-success">Join Room</button>
     </div>
-    <div id="host-controls">
-        <button onclick="correctAnswer()">correct</button>
-        <button onclick="incorrectAnswer()">incorrect</button>
-    </div>
     <div id="player-controls">
         <button onclick="buzz()" id="buzzer" disabled>BZZT</button>
         <div id="power-div">
             <button onclick="activatePower();" id="power-button">UNLEASH THE POWER</button>
             <h1 id="power-uses"></h1>
         </div>
-        <div class="break"></div>
-        <h1 id="money">$0</h1>
     </div>
-    <div id="display-room">
 
-    </div>
 
     <div id="character-page-1" class="menu-select character-select">
         <button class="next-button" onclick="nextPage()"><h1 style="font-size: 300%">&#8250</h1></button>
@@ -309,11 +302,20 @@
         </button>
     </div>
 
-    <div id="wager-screen">
-            <h1>Enter your Wager</h1>
+    <div class="final-jeopardy" id="wager-screen" >
+        <h1>Enter your Wager</h1>
         <div class="break"></div>
         <input id="wager-box" type="text">
-        <input type="submit" value="Submit Wager" class="btn-success btn">
+        <input onclick="submitWager()" type="submit" value="Submit Wager" class="btn-success btn">
     </div>
+
+    <div id="final-jeopardy-screen" class="final-jeopardy">
+        <h1>Enter your Answer</h1>
+        <div class="break"></div>
+        <input id="answer-box" type="text">
+        <input onclick="" type="submit" value="Submit Answer" class="btn-success btn">
+    </div>
+
+    <h1 id="money">$0</h1>
 </body>
 </html>

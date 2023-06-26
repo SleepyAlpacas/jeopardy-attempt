@@ -32,19 +32,7 @@ socket.on('join fail', room=> {
     alert("room " + room + " doesn't exist");
 });
 
-/*
-socket.on('correct answer', ()=>{
-    alert("Player " + (buzzedPlayers[buzzedPlayers.length-1]+1) + " got it right");
-    buzzedPlayers = [];
-    enableBuzzer();
-});
-socket.on('incorrect answer', ()=>{
-    alert("Player " + (buzzedPlayers[buzzedPlayers.length-1]+1) + " got it wrong");
-    if (!buzzedPlayers.includes(playerNum)){
-        enableBuzzer();
-    }
-})
-*/
+
 socket.on('disable buzzer', () => {
     disableBuzzer();
 });
@@ -70,11 +58,15 @@ socket.on('game state', gameState => {
 })
 
 socket.on('update money', ({playerNum, money}) => {
-    console.log(playerNum);
     if (playerNum == this.playerNum){
         document.getElementById('money').innerHTML = "$" + money;
     }
 });
+
+socket.on('wager screen', () => {
+    document.getElementById('player-controls').style.display = 'none';
+    document.getElementById('wager-screen').style.display = 'flex';
+})
 
 function joinRoom(){
     room = document.getElementById('join-roomid').value;
@@ -124,6 +116,7 @@ function setBuzzerNum(buzzerNum){
     }
 
     document.getElementById('player-controls').style.display="flex";
+    document.getElementById('money').style.display = "block";
 }
 
 function initCharacter(){
@@ -184,6 +177,16 @@ function activatePower(){
     if (characterNum == 0){
         confettiTimeout();
     }
+}
+
+function submitWager(){
+    let wagerAmount = parseInt(document.getElementById('wager-box').value);
+    let currentMoney = parseInt(document.getElementById('money').innerHTML.slice(1));
+    if (wagerAmount > currentMoney || (currentMoney <= 0 && wagerAmount != 0) || !String(wagerAmount).match(/^[0-9]+$/)){
+            alert('invalid wager');
+            return;
+    }
+    socket.emit('submit wager', ({playerNum, wagerAmount, room}));
 }
 
 function nextPage(){

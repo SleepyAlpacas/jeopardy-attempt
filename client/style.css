@@ -198,9 +198,19 @@
 #wager-box{
     width: 5vw;
 }
+#answer-box{
+    width: 20vw;
+}
 
-#wager-screen{
-    display: flex;
+#wager-screen {
+    display: none; /*flex*/
+}
+#final-jeopardy-screen{
+    display: none; 
+}
+
+.final-jeopardy{
+    display:flex;
     height: 50vh;
     width: 100vw;
     justify-content: center;
@@ -296,12 +306,14 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    height: 100vh;
+    height: 70vh;
 }
 
 #money{
+    display: none;
     font-size: 10vh;
     color: green;
+    text-align: center;
 }
 
 #confetti-canvas{
