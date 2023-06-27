@@ -10,6 +10,7 @@ var playerCount = 4;
 var currentPlayerCount = 0;
 var wagers = [];
 var moneyAfterWagers = [];
+var finalJeopardyAnswers = [];
 var characterIconsPath = "images/";
 var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp'];
 var buzzerPath = "buzzers/";
@@ -169,6 +170,7 @@ function correctAnswer(player){
         document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney + wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
+
     }
 }
 
@@ -216,6 +218,7 @@ function calculateWager(playerNum, wagerAmount){
     if (!wagers.includes(undefined) && wagers.length == playerCount){
         document.getElementById('final-jeopardy-wager').style.display = 'none';
         showQuestion(0, col);
+        socket.emit('show final jeopardy', room);
     }
 }
 
@@ -374,6 +377,16 @@ function sendGameState(){
     socket.emit('game state', ({gameState, room}));
 }
 
+function createPlayerAnswer(playerNum, answer){
+    let tempButton = document.createElement("button");
+    tempButton.onclick = function() {alert(answer)};
+    tempButton.innerHTML = "Show Answer";
+    tempButton.className = "btn btn-info";
+
+    let playerButtons = document.getElementsByClassName("buttons");
+    playerButtons[playerNum].append(tempButton);
+}
+
 async function powerPopUp(characterNum, playerNum){
     let tempDiv = document.createElement("div");
     tempDiv.id = "power-used";
@@ -473,6 +486,10 @@ socket.on('power', ({characterNum, playerNum}) => {
 
 socket.on('submit wager', ({playerNum, wagerAmount}) => {
     calculateWager(playerNum, wagerAmount);
+});
+
+socket.on('submit answer', ({playerNum, answer}) => {
+    createPlayerAnswer(playerNum, answer);
 });
 
 

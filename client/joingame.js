@@ -66,6 +66,10 @@ socket.on('update money', ({playerNum, money}) => {
 socket.on('wager screen', () => {
     document.getElementById('player-controls').style.display = 'none';
     document.getElementById('wager-screen').style.display = 'flex';
+});
+
+socket.on('show final jeopardy', () => {
+    document.getElementById('final-jeopardy-screen').style.display = 'flex';
 })
 
 function joinRoom(){
@@ -187,6 +191,13 @@ function submitWager(){
             return;
     }
     socket.emit('submit wager', ({playerNum, wagerAmount, room}));
+    document.getElementById('wager-screen').style.display = 'none';
+}
+
+function submitAnswer(){
+    let answer = document.getElementById('answer-box').value;
+    socket.emit('submit answer', ({playerNum, answer, room}));
+    document.getElementById('final-jeopardy-screen').style.display = 'none';
 }
 
 function nextPage(){

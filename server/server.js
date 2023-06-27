@@ -80,6 +80,14 @@ io.on('connection', (socket)=>{
 
     socket.on('wager screen', room => {
         io.to(room).emit('wager screen');
+    });
+
+    socket.on('submit answer', ({playerNum, answer, room}) => {
+        io.to(room).emit('submit answer', ({playerNum, answer}));
+    });
+
+    socket.on('show final jeopardy', room => {
+        io.to(room).emit('show final jeopardy');
     })
 });
 
