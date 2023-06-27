@@ -170,7 +170,8 @@ function correctAnswer(player){
         document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney + wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
-
+        
+        socket.emit('update money', ({playerNum: player, money: moneyAfterWagers[player], room}));
     }
 }
 
@@ -186,6 +187,8 @@ function incorrectAnswer(player){
         document.getElementsByClassName('money')[player].innerHTML = "???";
         moneyAfterWagers[player] = currentMoney - wagers[player];
         document.getElementsByClassName('buttons')[player].style.display = 'none';
+
+        socket.emit('update money', ({playerNum: player, money: moneyAfterWagers[player], room}));
     }
 }
 
