@@ -36,6 +36,10 @@
     background-color: white;
 }
 
+.small-character-name{
+    font-size: 2.0rem;
+}
+
 .character-info{
     height: 27%;
     width: inherit;

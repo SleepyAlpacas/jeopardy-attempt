@@ -128,10 +128,10 @@ function initCharacter(){
         playerPowerUses = 1000;
         document.getElementById('power-uses').style.display = 'none';
     }
-    else if (characterNum == 1 || characterNum == 4){
+    else if (characterNum == 1 || characterNum == 4 || characterNum == 11){
         playerPowerUses = 1;
     }
-    else if (characterNum == 2){
+    else if (characterNum == 2 || characterNum == 10){
         playerPowerUses = 3;
     }
     else{
@@ -155,7 +155,7 @@ function checkActivePowerDisabled(gameState){
 
     console.log(gameState);
     let powerButton = document.getElementById('power-button');
-    if (characterNum == 1){
+    if (characterNum == 1 || characterNum == 11){
         if (gameState == 'board'){
             powerButton.disabled = false;
         }
@@ -163,7 +163,7 @@ function checkActivePowerDisabled(gameState){
             powerButton.disabled = true;
         }
     }
-    else if (characterNum == 2 || characterNum == 4){
+    else if (characterNum == 2 || characterNum == 4 || characterNum == 10){
         if (gameState == 'buzz'){
             powerButton.disabled = false;
         }

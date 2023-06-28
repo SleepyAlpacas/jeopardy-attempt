@@ -12,7 +12,7 @@ var wagers = [];
 var moneyAfterWagers = [];
 var finalJeopardyAnswers = [];
 var characterIconsPath = "images/";
-var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp'];
+var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp'];
 var buzzerPath = "buzzers/";
 var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3'];
 var playerCharacters = [];
@@ -371,8 +371,11 @@ function useActivePower(player){
                 addMoney(i, Math.floor(money/playerCount));
             }
         }
-        document.getElementsByClassName('buttons')[player].style.display = 'none';
-        $(".buttons").eq(player).children().css("display","inline-block");
+    }
+    else if (playerCharacters[player] == 11){
+        let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
+        addMoney(player, -money);
+        document.getElementsByClassName('player-icon')[player].src = characterIconsPath + 'michigan2.png';
     }
 }
 
