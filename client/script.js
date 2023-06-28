@@ -2,7 +2,7 @@ var questions = [];
 var answers = [];
 var row = 5;
 var col = 5;
-var numQuestions = 1;
+var numQuestions = col * row;
 var currentQuestionRow = 999;
 var currentQuestionCol = 99;
 var currentQuestionMoney = 0;
@@ -12,7 +12,7 @@ var wagers = [];
 var moneyAfterWagers = [];
 var finalJeopardyAnswers = [];
 var characterIconsPath = "images/";
-var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp'];
+var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp'];
 var buzzerPath = "buzzers/";
 var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3'];
 var playerCharacters = [];
@@ -335,6 +335,14 @@ function checkPowerCorrect(player){
                 }
             }
         }
+    }
+
+    else if (playerCharacters[player] == 8 && buzzedPlayers.length == 1) {
+            addMoney(player, 75);
+    }
+
+    else if (playerCharacters[player] == 9 && buzzedPlayers.length != 1) {
+        addMoney(player, 125)
     }
 }
 
