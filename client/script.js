@@ -12,7 +12,7 @@ var wagers = [];
 var moneyAfterWagers = [];
 var finalJeopardyAnswers = [];
 var characterIconsPath = "images/";
-var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp'];
+var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp', 'Rocko_Wallaby.webp', 'Stimpy.webp', 'Robot_Krabs.webp', 'Pigs.webp'];
 var buzzerPath = "buzzers/";
 var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3'];
 var playerCharacters = [];
@@ -22,6 +22,9 @@ var playerIncorrectModifier = [];
 var playerCorrectBonus = [];
 var playerPowerUses = [];
 var correctPlayer = -1;
+
+var rockoed = false;
+var stimpied = false;
 
 const socket = io('ws://localhost:8080');
 var room;
@@ -131,6 +134,8 @@ function showAnswer(){
         x[i].style.display = "none";
     }
     removeBorder();
+    rockoed = false;
+    moneyAfterWagers = [];
 }
 
 function showBoard(){
@@ -160,7 +165,16 @@ function greyOutQuestion(){
 function correctAnswer(player){
     if (wagers.length != playerCount){
         correctPlayer = player;
-        addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
+        if (rockoed) {
+            addMoney(player, -currentQuestionMoney);
+            powerPopUp(12, playerCharacters.indexOf(12));
+        }
+        else if (moneyAfterWagers.length != 0){
+            addMoney(player, moneyAfterWagers[player]);
+        }
+        else {
+            addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
+        }
         checkPowerCorrect(player);
         showAnswer();
 
@@ -344,6 +358,24 @@ function checkPowerCorrect(player){
     else if (playerCharacters[player] == 9 && buzzedPlayers.length != 1) {
         addMoney(player, 125)
     }
+
+    else if (playerCharacters[player] == 15 && playerCorrectBonus[player] == 0) {
+        greyOutQuestion();
+        correctPlayer = player;
+        let x = document.getElementsByClassName('board-cell');
+        for (let i = 0; i < col; i++){
+            let correctAnswerInRow = false;
+            for (let i2 = 1; i2 < row + 1; i2++){
+                let currentCell = x[(i2 * col) + i];
+                if (currentCell.childNodes[0].src == "http://127.0.0.1:3000/jeopardy-attempt/client/" + characterIcons[15]){
+                    correctAnswerInRow = true;
+                    continue;
+                }
+            }
+            if (!correctAnswerInRow){return;}
+        }
+        playerCorrectBonus[player] = 100;
+    }
 }
 
 function checkPowerIncorrect(player){
@@ -376,6 +408,16 @@ function useActivePower(player){
         let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
         addMoney(player, -money);
         document.getElementsByClassName('player-icon')[player].src = characterIconsPath + 'michigan2.png';
+    }
+
+    else if (playerCharacters[player] == 12) {
+        rockoed = true;
+    }
+
+    else if (playerCharacters[player] == 13){
+        let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
+        moneyAfterWagers[player] = money * 2;
+        addMoney(player, -money);
     }
 }
 
@@ -492,7 +534,7 @@ socket.on('buzz', ({playerNum, buzzerNum}) => {
 });
 
 socket.on('power', ({characterNum, playerNum}) => {
-    if (characterNum != 0){
+    if (characterNum != 0 && characterNum != 12){
         powerPopUp(characterNum, playerNum);
     }
     useActivePower(playerNum);

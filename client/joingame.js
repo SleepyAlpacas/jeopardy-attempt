@@ -13,13 +13,7 @@ for (let i = 0; i < buzzerFiles.length; i++){
 
 socket.on('join success', ({room, player}) => {
     document.getElementById('room-menu').style.display = 'none';
-    /*
-    const text = document.createElement('h1');
-    text.innerText = "You are player " + player;
-    document.getElementById('display-room').appendChild(text);
-    */
     playerNum = player - 1;
-    //document.getElementById('player-controls').style.display = 'block';
 
     document.getElementById('character-page-1').style.display = 'flex';
     
@@ -131,6 +125,9 @@ function initCharacter(){
     else if (characterNum == 1 || characterNum == 4 || characterNum == 11){
         playerPowerUses = 1;
     }
+    else if (characterNum ==  12|| characterNum == 13 || characterNum == 14){
+        playerPowerUses = 2;
+    }
     else if (characterNum == 2 || characterNum == 10){
         playerPowerUses = 3;
     }
@@ -155,15 +152,18 @@ function checkActivePowerDisabled(gameState){
 
     console.log(gameState);
     let powerButton = document.getElementById('power-button');
-    if (characterNum == 1 || characterNum == 11){
+    if (characterNum == 1 || characterNum == 11 || characterNum == 12 || characterNum == 13){
         if (gameState == 'board'){
             powerButton.disabled = false;
+            if (characterNum == 13 && parseInt(document.getElementById('money').innerHTML.slice(1)) < 0){
+                powerButton.disabled = true;
+            }
         }
         else {
             powerButton.disabled = true;
         }
     }
-    else if (characterNum == 2 || characterNum == 4 || characterNum == 10){
+    else if (characterNum == 2 || characterNum == 4 || characterNum == 10 || characterNum == 14){
         if (gameState == 'buzz'){
             powerButton.disabled = false;
         }
