@@ -165,14 +165,17 @@ function greyOutQuestion(){
 function correctAnswer(player){
     if (wagers.length != playerCount){
         correctPlayer = player;
+        let specialExit = false;
         if (rockoed) {
             addMoney(player, -currentQuestionMoney);
             powerPopUp(12, playerCharacters.indexOf(12));
+            specialExit = true;
         }
-        else if (moneyAfterWagers.length != 0){
+        if (moneyAfterWagers.length != 0 && moneyAfterWagers[player] != undefined){
             addMoney(player, moneyAfterWagers[player]);
+            specialExit = true;
         }
-        else {
+        if (!specialExit) {
             addMoney(player, currentQuestionMoney * playerCorrectModifier[player] + playerCorrectBonus[player])
         }
         checkPowerCorrect(player);
@@ -280,7 +283,7 @@ function initCharacter(characterNum, playerNum){
     }
 
     if (characterNum == 3){
-        playerIncorrectModifier[playerNum] = 1.5;
+        playerIncorrectModifier[playerNum] = 1.25;
     }
     else if (characterNum == 6){}
     else{
@@ -352,11 +355,11 @@ function checkPowerCorrect(player){
     }
 
     else if (playerCharacters[player] == 8 && buzzedPlayers.length == 1) {
-            addMoney(player, 75);
+            addMoney(player, 50);
     }
 
     else if (playerCharacters[player] == 9 && buzzedPlayers.length != 1) {
-        addMoney(player, 125)
+        addMoney(player, 100)
     }
 
     else if (playerCharacters[player] == 15 && playerCorrectBonus[player] == 0) {
