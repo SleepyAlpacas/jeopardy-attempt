@@ -5,7 +5,7 @@ var characterNum;
 var playerPowerUses;
 var buzzerNum;
 var buzzerPath = 'buzzers/';
-var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3'];
+var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3', 'freeformjazz.mp3', 'tempura.mp3', 'yop.mp3', 'usb.mp3', 'animalcrossing.mp3', 'bowling.mp3', 'snakedies.mp3', 'kazooie.mp3'];
 
 for (let i = 0; i < buzzerFiles.length; i++){
     buzzerFiles[i] = buzzerPath + buzzerFiles[i];
@@ -200,8 +200,8 @@ function submitAnswer(){
     document.getElementById('final-jeopardy-screen').style.display = 'none';
 }
 
-function nextPage(){
-    let pages = document.getElementsByClassName('character-select');
+function nextPage(className){
+    let pages = document.getElementsByClassName(className);
     for (let i = 0; i < pages.length - 1; i++){
         if (pages[i].style.display == 'flex'){
             pages[i].style.display = 'none';
@@ -211,8 +211,8 @@ function nextPage(){
     }
 }
 
-function backPage(){
-    let pages = document.getElementsByClassName('character-select');
+function backPage(className){
+    let pages = document.getElementsByClassName(className);
     for (let i = 1; i < pages.length; i++){
         if (pages[i].style.display == 'flex'){
             pages[i].style.display = 'none';

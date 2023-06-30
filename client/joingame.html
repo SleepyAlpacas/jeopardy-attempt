@@ -39,7 +39,7 @@
 
 
     <div id="character-page-1" class="menu-select character-select">
-        <button class="next-button" onclick="nextPage()"><h1 style="font-size: 300%">&#8250</h1></button>
+        <button class="next-button" onclick="nextPage('character-select')"><h1 style="font-size: 300%">&#8250</h1></button>
         <h1 class="character-select-header"></h1>
         <div class="break"></div>
         <button onclick="setPlayerCharacter(0)" class="character">
@@ -147,7 +147,7 @@
     </div>
 
     <div id="character-page-2" class="menu-select character-select">
-        <button class="back-button" onclick="backPage()"><h1 style="font-size: 300%">&#8249</h1></button>
+        <button class="back-button" onclick="backPage('character-select')"><h1 style="font-size: 300%">&#8249</h1></button>
         <h1 class="character-select-header"></h1>
         <div class="break"></div>
         <button onclick="setPlayerCharacter(8)" class="character">
@@ -250,6 +250,7 @@
     </div>
 
     <div id="buzzer-page-1" class="menu-select buzzer-select">
+        <button class="next-button" onclick="nextPage('buzzer-select')"><h1 style="font-size: 300%">&#8250</h1></button>
         <h1 class="buzzer-select-header">Select a buzzer 🔊</h1>
         <div class="break"></div>
         <button onclick="setBuzzerNum(0)" class="buzzer-item">
@@ -276,6 +277,36 @@
             <h1 class="character-name">G Note</h1>
         </button>
     </div>
+
+    <div id="buzzer-page-2" class="menu-select buzzer-select">
+        <button class="back-button" onclick="backPage('buzzer-select')"><h1 style="font-size: 300%">&#8249</h1></button>
+        <h1 class="buzzer-select-header">Select a buzzer 🔊</h1>
+        <div class="break"></div>
+        <button onclick="setBuzzerNum(8)" class="buzzer-item">
+            <h1 class="character-name">Freeform Jazz</h1>
+        <button onclick="setBuzzerNum(9)" class="buzzer-item">
+            <h1 class="character-name">Deep Frying Tempura</h1>
+        </button>
+        <button onclick="setBuzzerNum(10)" class="buzzer-item">
+            <h1 class="character-name">Yop</h1>
+        </button>
+        <button onclick="setBuzzerNum(11)" class="buzzer-item">
+            <h1 class="character-name">Usb Connect</h1>
+        </button>
+        <button onclick="setBuzzerNum(12)" class="buzzer-item">
+            <h1 class="character-name">Animal Crossing</h1>
+        </button>
+        <button onclick="setBuzzerNum(13)" class="buzzer-item">
+            <h1 class="character-name">Bowling</h1>
+        </button>
+        <button onclick="setBuzzerNum(14)" class="buzzer-item">
+            <h1 class="character-name">Snake Dies</h1>
+        </button>
+        <button onclick="setBuzzerNum(15)" class="buzzer-item">
+            <h1 class="character-name">Kazooie</h1>
+        </button>
+    </div>
+
 
     <div class="final-jeopardy" id="wager-screen" >
         <h1>Enter your Wager</h1>
