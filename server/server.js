@@ -91,4 +91,4 @@ io.on('connection', (socket)=>{
     })
 });
 
-http.listen(8080, () => console.log('listening on 8080'));
+io.listen(process.env.PORT || 8080);

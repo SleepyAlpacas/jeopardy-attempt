@@ -24,9 +24,8 @@ var playerPowerUses = [];
 var correctPlayer = -1;
 
 var rockoed = false;
-var stimpied = false;
 
-const socket = io('ws://localhost:8080');
+const socket = io('https://jeopardont.onrender.com');
 var room;
 var buzzedPlayers = [];
 
