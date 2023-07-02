@@ -12,9 +12,9 @@ var wagers = [];
 var moneyAfterWagers = [];
 var finalJeopardyAnswers = [];
 var characterIconsPath = "images/";
-var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp', 'Rocko_Wallaby.webp', 'Stimpy.webp', 'Robot_Krabs.webp', 'Pigs.webp'];
+var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp', 'Rocko_Wallaby.webp', 'Stimpy.webp', 'Robot_Krabs.webp', 'Pigs.webp', 'purin.webp', 'gudetama.png', 'Cinn.webp'];
 var buzzerPath = "buzzers/";
-var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3', 'freeformjazz.mp3', 'tempura.mp3', 'yop.mp3', 'usb.mp3', 'animalcrossing.mp3', 'bowling.mp3', 'snakedies.mp3', 'kazooie.mp3'];
+var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'yep.mp3', 'freeformjazz.mp3', 'tempura.mp3', 'yop.mp3', 'usb.mp3', 'animalcrossing.mp3', 'bowling.mp3', 'snakedies.mp3', 'kazooie.mp3'];
 var playerCharacters = [];
 var playerBuzzers = [];
 var playerCorrectModifier = [];
@@ -25,7 +25,10 @@ var correctPlayer = -1;
 
 var rockoed = false;
 
-const socket = io('https://jeopardont.onrender.com');
+
+//'ws://localhost:8080'
+//'https://jeopardont.onrender.com'
+const socket = io('ws://localhost:8080');
 var room;
 var buzzedPlayers = [];
 
@@ -122,7 +125,6 @@ function loadQuestion(row, col){
 }
 
 function showAnswer(){
-    buzzedPlayers = [];
     socket.emit('disable buzzer', room);
     let gameState = 'answer';
     socket.emit('game state', ({gameState, room}));
@@ -132,6 +134,19 @@ function showAnswer(){
     for (let i = 0; i < x.length; i++){
         x[i].style.display = "none";
     }
+
+    //check gudetama's power, can only be one gudetama per game
+    if (playerCharacters.includes(17)){
+        let gudeplayer = playerCharacters.indexOf(17);
+        if (buzzedPlayers.includes(gudeplayer)){
+            playerCorrectBonus[gudeplayer] = 0;
+        }
+        else{
+            playerCorrectBonus[gudeplayer] += 25;
+        }
+    }
+
+    buzzedPlayers = [];
     removeBorder();
     rockoed = false;
     moneyAfterWagers = [];
@@ -264,6 +279,7 @@ function setPlayerCharacter(characterNum, playerNum){
         }
         document.getElementById('board').style.display = 'block';
         sendGameState();
+        socket.emit('send playerCharacters', ({playerCharacters, room}));   
     }
 }
 
@@ -409,7 +425,8 @@ function useActivePower(player){
     else if (playerCharacters[player] == 11){
         let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
         addMoney(player, -money);
-        document.getElementsByClassName('player-icon')[player].src = characterIconsPath + 'michigan2.png';
+        let x = document.getElementsByClassName('player')[player].querySelector('img');
+        x.src = characterIconsPath + "michigan2.png";
     }
 
     else if (playerCharacters[player] == 12) {

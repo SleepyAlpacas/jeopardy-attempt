@@ -278,14 +278,10 @@
 
 /* for joingame */
 #buzzer{
-    height: 50vh;
-    width: 50vh;
-    border-radius: 50%;
     background-image: linear-gradient(to right, black, red 400px, black 800px);
     background-size: 800px 100%;
     background-position: 50% 100%;
     background-repeat: no-repeat;
-    font-size: 400%;
 }
 
 #buzzer:disabled{
@@ -297,9 +293,6 @@
 }   
 
 #power-button{
-    height: 50vh;
-    width: 50vh;
-    border-radius: 50%;
     background-image: url('https://res.cloudinary.com/uktv/image/upload/v1375370891/err4wnmueojcwzrrsucu.jpg');
     background-size: 800px 100%;
     background-position: 30% 0%;
@@ -311,11 +304,35 @@
     background-image: none;
 }
 
+.big-button{
+    height: 50vh;
+    width: 50vh;
+    border-radius: 50%;
+    font-size: 400%;
+}
+
+#trust-button{
+    background-image: linear-gradient(to right, gray, green 400px, gray 800px);
+    background-size: 800px 100%;
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+}
+
+#prisoner-dilemma-screen{
+    display: none;
+}
+#player-select{
+    display: none;
+}
+#prisoner-buttons{
+    display: none;
+}
+
 #power-uses{
     text-align: center;
 }
 
-#player-controls{
+.button-menu{
     display:none; /*flex*/
     flex-wrap: wrap;
     justify-content: space-evenly;

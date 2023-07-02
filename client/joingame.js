@@ -5,10 +5,17 @@ var characterNum;
 var playerPowerUses;
 var buzzerNum;
 var buzzerPath = 'buzzers/';
-var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'gnote.mp3', 'freeformjazz.mp3', 'tempura.mp3', 'yop.mp3', 'usb.mp3', 'animalcrossing.mp3', 'bowling.mp3', 'snakedies.mp3', 'kazooie.mp3'];
+var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'yep.mp3', 'freeformjazz.mp3', 'tempura.mp3', 'yop.mp3', 'usb.mp3', 'animalcrossing.mp3', 'bowling.mp3', 'snakedies.mp3', 'kazooie.mp3'];
+var characterIconsPath = "images/";
+var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp', 'Rocko_Wallaby.webp', 'Stimpy.webp', 'Robot_Krabs.webp', 'Pigs.webp', 'purin.webp', 'gudetama.png', 'Cinn.webp'];
+var playerCharacters = [];
 
 for (let i = 0; i < buzzerFiles.length; i++){
     buzzerFiles[i] = buzzerPath + buzzerFiles[i];
+}
+
+for (let i = 0; i < characterIcons.length; i++){
+    characterIcons[i] = characterIconsPath + characterIcons[i];
 }
 
 socket.on('join success', ({room, player}) => {
@@ -64,7 +71,21 @@ socket.on('wager screen', () => {
 
 socket.on('show final jeopardy', () => {
     document.getElementById('final-jeopardy-screen').style.display = 'flex';
-})
+});
+
+socket.on('send playerCharacters', playerCharacters => {
+    this.playerCharacters = playerCharacters;
+});
+
+socket.on('send prisoner challenge', opponentNum =>{
+    console.log(opponentNum);
+    if (playerNum == parseInt(opponentNum)){
+        document.getElementById('player-controls').style.display = 'none';
+        document.getElementById('prisoner-dilemma-screen').style.display = 'block';
+        document.getElementById('prisoner-buttons').style.display = 'flex';
+    }
+});
+
 
 function joinRoom(){
     room = document.getElementById('join-roomid').value;
@@ -114,6 +135,7 @@ function setBuzzerNum(buzzerNum){
     }
 
     document.getElementById('player-controls').style.display="flex";
+    document.getElementById('buzzer').disabled = true;
     document.getElementById('money').style.display = "block";
 }
 
@@ -125,7 +147,7 @@ function initCharacter(){
     else if (characterNum == 1 || characterNum == 4 || characterNum == 11){
         playerPowerUses = 1;
     }
-    else if (characterNum ==  12|| characterNum == 13 || characterNum == 14){
+    else if (characterNum ==  12|| characterNum == 13 || characterNum == 14 || characterNum == 16){
         playerPowerUses = 2;
     }
     else if (characterNum == 2 || characterNum == 10){
@@ -181,6 +203,9 @@ function activatePower(){
     if (characterNum == 0){
         confettiTimeout();
     }
+    if (characterNum == 16){
+        createPrisonerScreen();
+    }
 }
 
 function submitWager(){
@@ -220,6 +245,43 @@ function backPage(className){
             break;
         }
     }
+}
+
+function createPrisonerScreen(){
+    document.getElementById('player-controls').style.display = 'none';
+    document.getElementById('prisoner-dilemma-screen').style.display = 'block';
+    let playerDiv = document.getElementById('player-select');
+    playerDiv.style.display = 'flex';
+    for (let i = 0; i < playerCharacters.length; i++){
+        if (i == playerNum){
+            continue;
+        }
+
+        let tempButton = document.createElement('button');
+        tempButton.className = 'character';
+        tempButton.addEventListener("click", function() {sendPrisonerChallenge(i)});
+
+        let tempH1 = document.createElement('h1');
+        tempH1.innerText = "Player " + (i+1);
+        
+        let tempDiv = document.createElement('div');
+        tempDiv.className = 'break';
+
+        let tempImg = document.createElement('img');
+        tempImg.src = characterIcons[playerCharacters[i]];
+        tempImg.className = 'character-icon';
+
+        tempButton.append(tempH1);
+        tempButton.append(tempDiv);
+        tempButton.append(tempImg);
+        playerDiv.append(tempButton);
+    }
+}
+
+function sendPrisonerChallenge(opponentNum){
+    socket.emit('send prisoner challenge', ({opponentNum, room}));
+    document.getElementById('player-select').style.display = 'none';
+    document.getElementById('prisoner-buttons').style.display = 'flex';
 }
 
 async function confetti() {

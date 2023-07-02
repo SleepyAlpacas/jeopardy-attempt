@@ -14,11 +14,18 @@
     <style>
         /*#host-controls{display:none;}
         
-        #room-menu{display:none;}
+
         .buzzer-select{display:flex;}
         
         #player-controls{display:flex;}
+
+                #room-menu{display:none;}
+        #prisoner-dilemma-screen{display:block;}
+        #prisoner-buttons{display:flex;}
+        #player-select{display:flex;}
         */
+
+        
 
         
 
@@ -29,10 +36,10 @@
         <input id="join-roomid" maxlength="5" placeholder="Room ID">
         <button onclick="joinRoom()" id="join-button" class="btn btn-success">Join Room</button>
     </div>
-    <div id="player-controls">
-        <button onclick="buzz()" id="buzzer" disabled>BZZT</button>
+    <div id="player-controls" class="button-menu">
+        <button onclick="buzz()" id="buzzer" class="big-button" disabled>BZZT</button>
         <div id="power-div">
-            <button onclick="activatePower();" id="power-button">UNLEASH THE POWER</button>
+            <button onclick="activatePower();" id="power-button" class="big-button">UNLEASH THE POWER</button>
             <h1 id="power-uses"></h1>
         </div>
     </div>
@@ -148,6 +155,7 @@
 
     <div id="character-page-2" class="menu-select character-select">
         <button class="back-button" onclick="backPage('character-select')"><h1 style="font-size: 300%">&#8249</h1></button>
+        <button class="next-button" onclick="nextPage('character-select')"><h1 style="font-size: 300%">&#8250</h1></button>
         <h1 class="character-select-header"></h1>
         <div class="break"></div>
         <button onclick="setPlayerCharacter(8)" class="character">
@@ -249,6 +257,48 @@
         </button>
     </div>
 
+    <div id="character-page-3" class="menu-select character-select">
+        <button class="back-button" onclick="backPage('character-select')"><h1 style="font-size: 300%">&#8249</h1></button>
+        <h1 class="character-select-header"></h1>
+        <div class="break"></div>
+        <button onclick="setPlayerCharacter(16)" class="character">
+            <h1 class="character-name">Pompompurin</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/purin.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Twice per game power. Put yourself and another player in the prisoner's dilemma.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(17)" class="character">
+            <h1 class="small-character-name">Gudetama</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/gudetama.png">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        For every question you don't buzz in, you gain a stackable $25 bonus on your next correct answer. Getting a question wrong will reset the bonus. 
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button onclick="setPlayerCharacter(18)" class="character">
+            <h1 class="character-name">Cinnamoroll</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Cinn.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Three per game power. Activate before answering a question to get 2 chances to answer a question correctly.
+                    </p>
+                </div>
+            </div>
+        </button>
+    </div>
+
     <div id="buzzer-page-1" class="menu-select buzzer-select">
         <button class="next-button" onclick="nextPage('buzzer-select')"><h1 style="font-size: 300%">&#8250</h1></button>
         <h1 class="buzzer-select-header">Select a buzzer 🔊</h1>
@@ -274,7 +324,7 @@
             <h1 class="character-name">Piano</h1>
         </button>
         <button onclick="setBuzzerNum(7)" class="buzzer-item">
-            <h1 class="character-name">G Note</h1>
+            <h1 class="character-name">Sesame Street Martians</h1>
         </button>
     </div>
 
@@ -320,6 +370,22 @@
         <div class="break"></div>
         <input id="answer-box" type="text">
         <input onclick="submitAnswer()" type="submit" value="Submit Answer" class="btn-success btn">
+    </div>
+
+    <div id="prisoner-dilemma-screen">
+        <!--    
+        300 each
+        500 for one, -300 for other
+        -100 each
+        -->
+        <div id="player-select" class="menu-select">
+
+        </div>
+
+        <div id="prisoner-buttons" class="button-menu">
+            <button class="big-button">TRUST</button>
+            <button class="big-button">BETRAY</button>
+        </div>
     </div>
 
     <h1 id="money">$0</h1>

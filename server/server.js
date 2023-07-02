@@ -88,7 +88,15 @@ io.on('connection', (socket)=>{
 
     socket.on('show final jeopardy', room => {
         io.to(room).emit('show final jeopardy');
-    })
+    });
+
+    socket.on('send playerCharacters', ({playerCharacters, room}) => {
+        io.to(room).emit('send playerCharacters', playerCharacters);
+    });
+
+    socket.on('send prisoner challenge', ({opponentNum, room}) => {
+        io.to(room).emit('send prisoner challenge', opponentNum);
+    });
 });
 
 io.listen(process.env.PORT || 8080);
