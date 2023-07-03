@@ -24,6 +24,8 @@ var playerPowerUses = [];
 var correctPlayer = -1;
 
 var rockoed = false;
+//prisonerButtons format = [button, playerNum, button, playerNum]
+var prisonerButtons = [];
 
 
 //'ws://localhost:8080'
@@ -516,6 +518,39 @@ function backPage(){
     }
 }
 
+function prisonerDilemma(button, playerNum){
+    prisonerButtons.push(button);
+    prisonerButtons.push(playerNum);
+    if (prisonerButtons.length == 4){
+        let button1 = prisonerButtons[0];
+        let player1 = prisonerButtons[1];
+        let button2 = prisonerButtons[2];
+        let player2 = prisonerButtons[3];
+
+        if (button1 && button2){
+            addMoney(player1, -100);
+            addMoney(player2, -100);
+        }
+        else if (button1 ^ button2){
+            if (button1){
+                addMoney(player1, 500);
+                addMoney(player2, -300);
+            }
+            else{
+                addMoney(player2, 500);
+                addMoney(player1, -300);
+            }
+        }
+        else{
+            addMoney(player1, 300);
+            addMoney(player2, 300);
+        }
+
+        socket.emit('prisoner dilemma finish', room);
+        prisonerButtons = [];
+    }
+}
+
 //Server Stuff
 
 
@@ -567,6 +602,9 @@ socket.on('submit answer', ({playerNum, answer}) => {
     createPlayerAnswer(playerNum, answer);
 });
 
+socket.on('send prisoner button', ({button, playerNum}) => {
+    prisonerDilemma(button, playerNum);
+});
 
 
 function createRoom(){

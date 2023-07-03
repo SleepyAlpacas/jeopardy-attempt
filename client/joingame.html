@@ -223,7 +223,7 @@
             <div class="character-info">
                 <div>
                     <p class="character-info-text yellow-text">
-                        Twice per game power. Activate before picking a question to bet all your money on the next question.
+                        Twice per game power. Activate before picking a question to bet all your money on the next question (your money cannot be negative).
                     </p>
                 </div>
             </div>
@@ -235,7 +235,7 @@
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
-                        Twice per game power. Activate after buzzing in and get to ask ChatGPT any question that's 5 words or less.
+                        Once per game power. Activate after buzzing in and get to ask ChatGPT any question that's 5 words or less.
                     </p>
                 </div>
             </div>
@@ -383,8 +383,8 @@
         </div>
 
         <div id="prisoner-buttons" class="button-menu">
-            <button class="big-button">TRUST</button>
-            <button class="big-button">BETRAY</button>
+            <button onclick="sendPrisonerButton(0)" class="big-button">TRUST</button>
+            <button onclick="sendPrisonerButton(1)" class="big-button">BETRAY</button>
         </div>
     </div>
 

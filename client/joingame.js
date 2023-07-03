@@ -86,6 +86,10 @@ socket.on('send prisoner challenge', opponentNum =>{
     }
 });
 
+socket.on('prisoner dilemma finish', () => {
+    document.getElementById('player-controls').style.display = 'flex';
+});
+
 
 function joinRoom(){
     room = document.getElementById('join-roomid').value;
@@ -144,10 +148,10 @@ function initCharacter(){
         playerPowerUses = 1000;
         document.getElementById('power-uses').style.display = 'none';
     }
-    else if (characterNum == 1 || characterNum == 4 || characterNum == 11){
+    else if (characterNum == 1 || characterNum == 4 || characterNum == 11 || characterNum == 14){
         playerPowerUses = 1;
     }
-    else if (characterNum ==  12|| characterNum == 13 || characterNum == 14 || characterNum == 16){
+    else if (characterNum ==  12|| characterNum == 13  || characterNum == 16){
         playerPowerUses = 2;
     }
     else if (characterNum == 2 || characterNum == 10){
@@ -174,7 +178,7 @@ function checkActivePowerDisabled(gameState){
 
     console.log(gameState);
     let powerButton = document.getElementById('power-button');
-    if (characterNum == 1 || characterNum == 11 || characterNum == 12 || characterNum == 13){
+    if (characterNum == 1 || characterNum == 11 || characterNum == 12 || characterNum == 13 || characterNum == 16){
         if (gameState == 'board'){
             powerButton.disabled = false;
             if (characterNum == 13 && parseInt(document.getElementById('money').innerHTML.slice(1)) < 0){
@@ -259,7 +263,7 @@ function createPrisonerScreen(){
 
         let tempButton = document.createElement('button');
         tempButton.className = 'character';
-        tempButton.addEventListener("click", function() {sendPrisonerChallenge(i)});
+        tempButton.addEventListener("click", function() {let index = i; sendPrisonerChallenge(index)});
 
         let tempH1 = document.createElement('h1');
         tempH1.innerText = "Player " + (i+1);
@@ -282,6 +286,13 @@ function sendPrisonerChallenge(opponentNum){
     socket.emit('send prisoner challenge', ({opponentNum, room}));
     document.getElementById('player-select').style.display = 'none';
     document.getElementById('prisoner-buttons').style.display = 'flex';
+}
+
+function sendPrisonerButton(button){
+    //0 = trust, 1 = betray
+    document.getElementById('prisoner-buttons').style.display = 'none';
+    document.getElementById('prisoner-dilemma-screen').style.display = 'none';
+    socket.emit('send prisoner button', ({button, playerNum, room}));
 }
 
 async function confetti() {
