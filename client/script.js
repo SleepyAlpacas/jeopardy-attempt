@@ -2,7 +2,7 @@ var questions = [];
 var answers = [];
 var row = 5;
 var col = 5;
-var numQuestions = col * row;
+var numQuestions = row*col;
 var currentQuestionRow = 999;
 var currentQuestionCol = 99;
 var currentQuestionMoney = 0;
@@ -315,7 +315,7 @@ function initCharacter(characterNum, playerNum){
     }
 }
 
-//the bingo function doesn't work on all board sizes yet
+//fix any image powers
 function checkPowerCorrect(player){
     if (playerCharacters[player] == 3){
         playerCorrectBonus[player] += 50;
@@ -328,7 +328,8 @@ function checkPowerCorrect(player){
         correctPlayer = player;
         let x = document.getElementsByClassName('board-cell');
         for (let i = 0; i < col; i++){
-            if (x[(currentQuestionRow+1)*5+i].nodeName == 'BUTTON' || x[(currentQuestionRow+1)*5+i].innerHTML == '' || x[(currentQuestionRow+1)*5+i].childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7] ){
+            let currentCell = x[(currentQuestionRow+1)*row+i];
+            if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7] ){
                 break;
             }
             if (i == col-1){
@@ -337,7 +338,8 @@ function checkPowerCorrect(player){
             }
         }
         for (let i = 1; i < row+1; i++){
-            if (x[i*5+currentQuestionCol].nodeName == 'BUTTON' || x[i*5+currentQuestionCol].innerHTML == '' || x[i*5+currentQuestionCol].childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
+            let currentCell = x[i*row+currentQuestionCol];
+            if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
                 break;
             }
             if (i == row){
@@ -345,27 +347,31 @@ function checkPowerCorrect(player){
                 addMoney(player, 2500);
             }
         }
-        if (currentQuestionCol == currentQuestionRow){
-            for (let i = 0; i < row; i++){
-                if (x[5*(i+1) + i].nodeName == 'BUTTON' || x[5*(i+1) + i].innerHTML == ''  || x[5*(i+1) + i].childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
-                    console.log("i've broken" + (5*i) + " " + i);
-                    break;
-                }
-                if (i == row-1){
-                    console.log("DIAGONAL FORWARD BRONGO");
-                    addMoney(player, 2500);
+        if (col == row){ 
+            if (currentQuestionCol == currentQuestionRow){
+                for (let i = 0; i < row; i++){
+                    let currentCell = x[row*(i+1) + i];
+                    if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == ''  || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
+                        console.log("i've broken" + (5*i) + " " + i);
+                        break;
+                    }
+                    if (i == row-1){
+                        console.log("DIAGONAL FORWARD BRONGO");
+                        addMoney(player, 2500);
+                    }
                 }
             }
-        }
-        if (currentQuestionCol + currentQuestionRow == 4){
-            for (let i = 1; i < row + 1; i++){
-                if (x[5*(i+1) - i].nodeName == 'BUTTON' || x[5*(i+1) - i].innerHTML == '' || x[5*(i+1) - i].childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
-                    console.log("i've broken" + (5*i) + " " + i);
-                    break;
-                }
-                if (i == row){
-                    console.log("DIAGONAL BACKWARD BRONGO");
-                    addMoney(player, 2500);
+            if (currentQuestionCol + currentQuestionRow == 4){
+                for (let i = 1; i < row + 1; i++){
+                    let currentCell = x[row*(i+1) - i];
+                    if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
+                        console.log("i've broken" + (5*i) + " " + i);
+                        break;
+                    }
+                    if (i == row){
+                        console.log("DIAGONAL BACKWARD BRONGO");
+                        addMoney(player, 2500);
+                    }
                 }
             }
         }
@@ -439,6 +445,10 @@ function useActivePower(player){
         let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
         moneyAfterWagers[player] = money * 2;
         addMoney(player, -money);
+    }
+
+    else if (playerCharacters[player] == 16){
+        document.getElementById('pause-screen').style.display = 'flex';
     }
 
     else if (playerCharacters[player] == 19){
@@ -563,6 +573,7 @@ function prisonerDilemma(button, playerNum){
 
         socket.emit('prisoner dilemma finish', room);
         prisonerButtons = [];
+        document.getElementById('pause-screen').style.display = 'none';
     }
 }
 
@@ -619,6 +630,10 @@ socket.on('submit answer', ({playerNum, answer}) => {
 
 socket.on('send prisoner button', ({button, playerNum}) => {
     prisonerDilemma(button, playerNum);
+});
+
+socket.on('request question', ({row, col, playerNum}) => {
+    socket.emit('send question', ({question: questions[row][col], playerNum, room}));
 });
 
 

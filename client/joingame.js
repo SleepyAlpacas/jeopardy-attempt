@@ -64,9 +64,13 @@ socket.on('update money', ({playerNum, money}) => {
     }
 });
 
+//fix this to work on all board sizes
 socket.on('wager screen', () => {
     document.getElementById('player-controls').style.display = 'none';
     document.getElementById('wager-screen').style.display = 'flex';
+    if (characterNum == 18){
+        socket.emit('request question', ({row:0, col:5, playerNum, room}));
+    }
 });
 
 socket.on('show final jeopardy', () => {
@@ -90,6 +94,11 @@ socket.on('prisoner dilemma finish', () => {
     document.getElementById('player-controls').style.display = 'flex';
 });
 
+socket.on('send question', ({question, playerNum}) => {
+    if (playerNum == this.playerNum){
+        alert(question);
+    }
+});
 
 function joinRoom(){
     room = document.getElementById('join-roomid').value;
@@ -255,6 +264,7 @@ function createPrisonerScreen(){
     document.getElementById('player-controls').style.display = 'none';
     document.getElementById('prisoner-dilemma-screen').style.display = 'block';
     let playerDiv = document.getElementById('player-select');
+    playerDiv.innerHTML = '';
     playerDiv.style.display = 'flex';
     for (let i = 0; i < playerCharacters.length; i++){
         if (i == playerNum){

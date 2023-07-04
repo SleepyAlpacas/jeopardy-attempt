@@ -105,6 +105,14 @@ io.on('connection', (socket)=>{
     socket.on('prisoner dilemma finish', room => {
         io.to(room).emit('prisoner dilemma finish');
     });
+
+    socket.on('request question', ({row, col, playerNum, room}) => {
+        io.to(room).emit('request question', ({row, col, playerNum}));
+    });
+
+    socket.on('send question', ({question, playerNum, room}) => {
+        io.to(room).emit('send question', ({question, playerNum}));
+    });
 });
 
 io.listen(process.env.PORT || 8080);
