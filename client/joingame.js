@@ -154,7 +154,7 @@ function initCharacter(){
     else if (characterNum ==  12|| characterNum == 13  || characterNum == 16){
         playerPowerUses = 2;
     }
-    else if (characterNum == 2 || characterNum == 10){
+    else if (characterNum == 2 || characterNum == 10 || characterNum == 19){
         playerPowerUses = 3;
     }
     else{

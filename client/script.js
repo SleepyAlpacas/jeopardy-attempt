@@ -12,7 +12,7 @@ var wagers = [];
 var moneyAfterWagers = [];
 var finalJeopardyAnswers = [];
 var characterIconsPath = "images/";
-var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp', 'Rocko_Wallaby.webp', 'Stimpy.webp', 'Robot_Krabs.webp', 'Pigs.webp', 'purin.webp', 'gudetama.png', 'Cinn.webp'];
+var characterIcons = ['Mr._Happy.webp', 'Bump2.webp', 'Mr-nosey-5a.webp', 'Mr_Clever-6A.PNG.webp', 'Littlemissbossy.webp', 'Lucky1.webp', 'MR_WRONG_2A.PNG.webp', 'Little_Miss_Twins4.PNG.webp', 'Speedy_Gonzales.png', 'Slowpoke_Rodriguez.webp', 'Foghorn_Leghorn.png', 'Michigan_J._Frog.webp', 'Rocko_Wallaby.webp', 'Stimpy.webp', 'Robot_Krabs.webp', 'Pigs.webp', 'purin.webp', 'gudetama.png', 'Cinn.webp', 'christophernolan.png'];
 var buzzerPath = "buzzers/";
 var buzzerFiles = ['dolphin.mp3', 'flintmobile.mp3', 'subaluwa.mp3', 'headshake.mp3', 'pourwater.mp3', 'thunder.mp3', 'piano.mp3', 'yep.mp3', 'freeformjazz.mp3', 'tempura.mp3', 'yop.mp3', 'usb.mp3', 'animalcrossing.mp3', 'bowling.mp3', 'snakedies.mp3', 'kazooie.mp3'];
 var playerCharacters = [];
@@ -440,6 +440,10 @@ function useActivePower(player){
         moneyAfterWagers[player] = money * 2;
         addMoney(player, -money);
     }
+
+    else if (playerCharacters[player] == 19){
+        pause();
+    }
 }
 
 
@@ -488,6 +492,17 @@ async function confetti() {
     await sleep(3000); 
     stopConfetti();
 } 
+
+async function pause(){
+    let pause = document.getElementById('pause-screen');
+    pause.style.display = 'flex';
+    socket.emit('disable buzzer', room);
+    await sleep(5000);
+    pause.style.display = 'none';
+    if (document.getElementById('question-screen').style.display == 'flex'){
+        socket.emit('enable valid buzzer', ({room, buzzedPlayers}));
+    }
+}
 
 function removeBorder(){
     let players = document.getElementsByClassName('player');

@@ -143,6 +143,22 @@
     border: 1px solid black;
 }
 
+#pause-screen{
+    height: 73vh;
+    width: 100vw;
+    display: none; /*flex*/
+
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    position:fixed;
+    top: 0;
+
+    z-index: 10;
+    background-color: white;
+}
+
 #power-used{
     display: flex;
     align-items: center;
