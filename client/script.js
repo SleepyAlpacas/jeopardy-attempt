@@ -1,7 +1,7 @@
 var questions = [];
 var answers = [];
 var row = 5;
-var col = 5;
+var col = 6;
 var numQuestions = row*col;
 var currentQuestionRow = 999;
 var currentQuestionCol = 99;
@@ -46,7 +46,7 @@ for (let i = 0; i < characterIcons.length; i++){
     characterIcons[i] = characterIconsPath + characterIcons[i];
 }
 
-for (let i = 0; i < col; i++){
+for (let i = 0; i < col-1; i++){
     questions[i][0] = "<img src='0-" + i + ".png'>";
 }
 answers[0][0]='Blastoise'; answers[1][0]='Sentret'; answers[2][0]='Dusclops'; answers[3][0]='Munna'; answers[4][0]='Drapion';
