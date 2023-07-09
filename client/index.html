@@ -9,18 +9,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha38$400NjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script src="confetti.js"></script>
     <script src="script.js"></script>
     <title>Jeopardon't</title>
     <link rel="icon" href="favicon.ico?">
 </head>
+<style>
+        /*
+    #room-menu{
+        display: none;
+    }
+    #board{
+        display:block;
+    }
+
+    #character-page-1{
+        display: flex;
+    }*/
+</style>
 <body>
+
+    <div id="room-menu">
+        <input id="create-roomid" maxlength="5" placeholder="Room ID">
+        <button onclick="createRoom()" id="create-button" class="btn btn-success">Create Room</button>
+    </div>
+
     <div id="board">
         <div class="board-row">
-            <div class="board-cell">Who's That Pokemon</div>
-            <div class="board-cell">WatchMojo Top 10</div>
-            <div class="board-cell">Brain Teasers</div>
-            <div class="board-cell">Animeposting</div>
-            <div class="board-cell">Guess the Country from the Stock Footage</div>
+            <div class="board-cell">Picture Puns</div>
+            <div class="board-cell">Toronto Tourist</div>
+            <div class="board-cell">Old Weapon Stuff</div>
+            <div class="board-cell">Zimbabwe</div>
+            <div class="board-cell">Kachow</div>
+            <div class="board-cell">Commercial Jingles</div>
         </div>
         <div class="board-questions">
             <div class="board-row">
@@ -29,6 +50,7 @@
                 <button onclick="showQuestion(0,2)" class="board-cell">$100</button>
                 <button onclick="showQuestion(0,3)" class="board-cell">$100</button>
                 <button onclick="showQuestion(0,4)" class="board-cell">$100</button>
+                <button onclick="showQuestion(0,5)" class="board-cell">$100</button>
             </div>
             <div class="board-row">
                 <button onclick="showQuestion(1,0)" class="board-cell">$200</button>
@@ -36,6 +58,7 @@
                 <button onclick="showQuestion(1,2)" class="board-cell">$200</button>
                 <button onclick="showQuestion(1,3)" class="board-cell">$200</button>
                 <button onclick="showQuestion(1,4)" class="board-cell">$200</button>
+                <button onclick="showQuestion(1,5)" class="board-cell">$200</button>
             </div>
             <div class="board-row">
                 <button onclick="showQuestion(2,0)" class="board-cell">$300</button>
@@ -43,6 +66,7 @@
                 <button onclick="showQuestion(2,2)" class="board-cell">$300</button>
                 <button onclick="showQuestion(2,3)" class="board-cell">$300</button>
                 <button onclick="showQuestion(2,4)" class="board-cell">$300</button>
+                <button onclick="showQuestion(2,5)" class="board-cell">$300</button>
             </div>
             <div class="board-row">
                 <button onclick="showQuestion(3,0)" class="board-cell">$400</button>
@@ -50,6 +74,7 @@
                 <button onclick="showQuestion(3,2)" class="board-cell">$400</button>
                 <button onclick="showQuestion(3,3)" class="board-cell">$400</button>
                 <button onclick="showQuestion(3,4)" class="board-cell">$400</button>
+                <button onclick="showQuestion(3,5)" class="board-cell">$400</button>
             </div>
             <div class="board-row">
                 <button onclick="showQuestion(4,0)" class="board-cell">$500</button>
@@ -57,6 +82,7 @@
                 <button onclick="showQuestion(4,2)" class="board-cell">$500</button>
                 <button onclick="showQuestion(4,3)" class="board-cell">$500</button>
                 <button onclick="showQuestion(4,4)" class="board-cell">$500</button>
+                <button onclick="showQuestion(4,5)" class="board-cell">$500</button>
             </div>
         </div>
     </div>
@@ -74,9 +100,7 @@
     </div>
 
     <div id="final-jeopardy-wager">
-        <h1>Final Jeopardon't</h1>
-
-        <button type="button" onclick="submitWager()" class="btn btn-primary wager-button">Submit Wagers</button>
+        <h1>Submit Your Wagers</h1>
     </div>
 
     <div id="win-screen">
@@ -84,38 +108,42 @@
         <img id="winner-icon">
     </div>
 
-    <div id="character-select">
-        <h1 id="character-select-header">Player 1 Select Your Character</h1>
+    <div id="pause-screen">
+        <h1>PAUSED</h1>
         <div class="break"></div>
-        <button onclick="setPlayerCharacter(0)" class="character">
-            
+        <img src="images/a8f.jpg">
+    </div>
+
+    <div id= "character-page-1" class="character-select menu-select">
+        <button class="next-button" onclick="nextPage()"><h1 style="font-size: 300%">&#8250</h1></button>
+        <h1 class="character-select-header">Select Your Character</h1>
+        <div class="break"></div>
+        <button class="character">
             <h1 class="character-name">Mr. Happy</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr._Happy.webp">
+            <img class="character-icon" src="images/Mr._Happy.webp">
             <div class="character-info">
                 <div>
-                    <p class="character-info-text green-text">Big Smile :)</p>
-
-                    <p class="character-info-text red-text">no benefits</p>
+                    <p class="character-info-text green-text">Can activate power to shower confetti onto the screen. Cooldown of 1 minute.</p>
                 </div>
             </div>
         </button>
-        <button onclick="setPlayerCharacter(1)" class="character">
+        <button class="character">
             <h1 class="character-name">Mr. Bump</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Bump2.webp">
+            <img class="character-icon" src="images/Bump2.webp">
             <div class="character-info">
                 <div>
-                    <p class="character-info-text orange-text">
+                    <p class="character-info-text yellow-text">
                         Once per game power. Activate to have a 50% chance of doubling your money, 40% chance of losing all your money, 10% chance of spreading money evenly across all players
                     </p>
                 </div>
             </div>
         </button>
-        <button onclick="setPlayerCharacter(2)" class="character">
+        <button class="character">
             <h1 class="character-name">Mr. Nosey</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr-nosey-5a.webp">
+            <img class="character-icon" src="images/Mr-nosey-5a.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -124,25 +152,25 @@
                 </div>
             </div>
         </button>
-        <button onclick="setPlayerCharacter(3)" class="character">
+        <button class="character">
             <h1 class="character-name">Mr. Clever</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Mr_Clever-6A.PNG.webp">
+            <img class="character-icon" src="images/Mr_Clever-6A.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
                         Gain a win streak bonus of $50 per question.
                     </p>
                     <p class="character-info-text red-text">
-                        Lose 50% more money on incorrect answers.
+                        Lose 25% more money on incorrect answers.
                     </p>
                 </div>
             </div>
         </button>
-        <button onclick="setPlayerCharacter(4)" class="character">
+        <button class="character">
             <h1 class="character-name">Little Miss Bossy</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Littlemissbossy.webp">
+            <img class="character-icon" src="images/Littlemissbossy.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -151,23 +179,23 @@
                 </div>
             </div>
         </button>
-        <button onclick="setPlayerCharacter(5)" class="character">
+        <button class="character">
             <h1 class="character-name">Little Miss Lucky</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Lucky1.webp">
+            <img class="character-icon" src="images/Lucky1.webp">
             <div class="character-info">
                 <div>
-                    <p class="character-info-text orange-text">
+                    <p class="character-info-text yellow-text">
                         Correct answers give a random amount of money from -200 to 500
                     </p>
                 </div>
             </div>
             
         </button>
-        <button onclick="setPlayerCharacter(6)" class="character">
+        <button class="character">
             <h1 class="character-name">Mr. Wrong</h1>
             <div class="break"></div>
-            <img class="character-icon" src="MR_WRONG_2A.PNG.webp">
+            <img class="character-icon" src="images/MR_WRONG_2A.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -179,10 +207,10 @@
                 </div>
             </div>
         </button>
-        <button onclick="setPlayerCharacter(7)" class="character">
+        <button class="character">
             <h1 class="character-name">Little Miss Twins</h1>
             <div class="break"></div>
-            <img class="character-icon" src="Little_Miss_Twins4.PNG.webp">
+            <img class="character-icon" src="images/Little_Miss_Twins4.PNG.webp">
             <div class="character-info">
                 <div>
                     <p class="character-info-text green-text">
@@ -193,52 +221,209 @@
         </button>
     </div>
 
-    <div class="players">
+    <div id= "character-page-2" class="character-select menu-select">
+        <button class="back-button" onclick="backPage()"><h1 style="font-size: 300%">&#8249</h1></button>
+        <button class="next-button" onclick="nextPage('character-select')"><h1 style="font-size: 300%">&#8250</h1></button>
+        <h1 class="character-select-header">Select Your Character 2</h1>
+        <div class="break"></div>
+        <button class="character">
+            <h1 class="character-name">Speedy Gonzales</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Speedy_Gonzales.png">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">Gain an additional $50 on correct answers if you buzz first</p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="small-character-name">Slowpoke Rodriguez</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Slowpoke_Rodriguez.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Gain an additional $100 on correct answers if you don't buzz in first
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Foghorn Leghorn</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Foghorn_Leghorn.png">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Three per game power. Activate before answering a question to get 2 chances to answer a question correctly.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Michigan J. Frog</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Michigan_J._Frog.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Once per game power. Activate to set money to $0.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Rocko</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Rocko_Wallaby.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Twice per game power. Before someone picks a question, you can activate this power to make the question take away points if someone answers it correctly. 
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Stimpy</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Stimpy.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text yellow-text">
+                        Twice per game power. Activate before picking a question to bet all your money on the next question (your money cannot be negative).
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Robot Krabs</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Robot_Krabs.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Once per game power. Activate after buzzing in and get to ask ChatGPT any question that's 5 words or less.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Porky Pig</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Pigs.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Getting a question right in every category grants you a $100 bonus on correct answers.
+                    </p>
+                    <p class="character-info-text red-text">
+                        You cannot stutter while answering.
+                    </p>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <div id="character-page-3" class="menu-select character-select">
+        <button class="back-button" onclick="backPage('character-select')"><h1 style="font-size: 300%">&#8249</h1></button>
+        <h1 class="character-select-header"></h1>
+        <div class="break"></div>
+        <button class="character">
+            <h1 class="character-name">Pompompurin</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/purin.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        For every question you don't buzz in, you gain a stackable $25 bonus on your next correct answer. Getting a question wrong will reset the bonus. 
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="small-character-name">Gudetama</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/gudetama.png">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        For every question you don't buzz in, you gain a stackable $25 bonus on your next correct answer. Getting a question wrong will reset the bonus. 
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="character-name">Cinnamoroll</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/Cinn.webp">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        See the Final Jeopardon't™ question before wagering.
+                    </p>
+                </div>
+            </div>
+        </button>
+        <button class="character">
+            <h1 class="small-character-name">Christopher Nolan</h1>
+            <div class="break"></div>
+            <img class="character-icon" src="images/christophernolan.png">
+            <div class="character-info">
+                <div>
+                    <p class="character-info-text green-text">
+                        Three per game ability. Can activate at any time to pause the game for 5 seconds (pausing also disables buzzers).
+                    </p>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <div id="players">
         <div class="player">
-            <input type="password" class="wager-box">
+
             <div class="buttons">
                 <button type="button" onclick="correctAnswer(0)" class="btn btn-success">Yep</button>
                 <button type="button" onclick="incorrectAnswer(0)" class="btn btn-danger">Nope</button>
-                <button type="button" onclick="useActivePower(0)" class="btn btn-info power-button">Power</button>
+                
             </div>
             <div class="break"></div>
-            <h1 class="money" contenteditable="true">0$</h1>
+            <h1 class="money" contenteditable="true">$0</h1>
             <div class="break"></div>
             <img class="player-icon">
         </div>
         <div class="player">
-            <input type="password" class="wager-box">
+
             <div class="buttons">
                 <button type="button" onclick="correctAnswer(1)" class="btn btn-success">Yep</button>
                 <button type="button" onclick="incorrectAnswer(1)" class="btn btn-danger">Nope</button>
-                <button type="button" onclick="useActivePower(1)" class="btn btn-info power-button">Power</button>
             </div>
             <div class="break"></div>
-            <h1 class="money" contenteditable="true">0$</h1>
+            <h1 class="money" contenteditable="true">$0</h1>
             <div class="break"></div>
             <img class="player-icon">
         </div>
         <div class="player">
-            <input type="password" class="wager-box">
+
             <div class="buttons">
                 <button type="button" onclick="correctAnswer(2)" class="btn btn-success">Yep</button>
                 <button type="button" onclick="incorrectAnswer(2)" class="btn btn-danger">Nope</button>
-                <button type="button" onclick="useActivePower(2)" class="btn btn-info power-button">Power</button>
+                
             </div>
             <div class="break"></div>
-            <h1 class="money" contenteditable="true">0$</h1>
+            <h1 class="money" contenteditable="true">$0</h1>
             <div class="break"></div>
             <img class="player-icon">
         </div>
         <div class="player">
-            <input type="password" class="wager-box">
+
             <div class="buttons">
                 <button type="button" onclick="correctAnswer(3)" class="btn btn-success">Yep</button>
                 <button type="button" onclick="incorrectAnswer(3)" class="btn btn-danger">Nope</button>
-                <button type="button" onclick="useActivePower(3)" class="btn btn-info power-button">Power</button>
+                
             </div>
             <div class="break"></div>
-            <h1 class="money" contenteditable="true">0$</h1>
+            <h1 class="money" contenteditable="true">$0</h1>
             <div class="break"></div>
             <img class="player-icon">
         </div>
