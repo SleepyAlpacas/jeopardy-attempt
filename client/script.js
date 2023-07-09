@@ -46,44 +46,29 @@ for (let i = 0; i < characterIcons.length; i++){
     characterIcons[i] = characterIconsPath + characterIcons[i];
 }
 
-for (let i = 0; i < col-1; i++){
-    questions[i][0] = "<img src='0-" + i + ".png'>";
-}
-answers[0][0]='Blastoise'; answers[1][0]='Sentret'; answers[2][0]='Dusclops'; answers[3][0]='Munna'; answers[4][0]='Drapion';
-
-questions[0][1] = 'Top 10 Healthiest Foods'; questions[2][1]='Top 10 Songs that will make you cry'; questions[1][1]='Top 10 Most Intelligent Animals';questions[3][1]='Top 10 Insanely Racist Moments In Disney Movies That You Totally Forgot About';questions[4][1] = 'Top 5 Brutal Facts About Getting Shot'
-answers[0][1]='<ul><li>Avocado</li><li> Kale</li><li> Sweet Potato</li><li> Blueberries</li><li> Almond</li></ul><ul><li> Apple</li><li> Salmon</li><li> Oats</li><li> Garlic</li><li> Broccoli</li></ul>';
-answers[2][1]='<ul><li>Wild Horses</li><li> The Sound of Silence</li><li> Wish you were here</li><li> One sweet day</li><li> The living years</li></ul><ul><li> Candle in the wind</li><li> Hallelujah</li><li> Everybody Hurts</li><li> Hurt</li><li> Tears in Heaven</li></ul>';
-answers[1][1]='<ul><li>Raccoon</li><li>Border Collie</li><li>African Grey Parrot</li><li>Pig</li><li>Rat</li></ul><ul><li>Orangutan</li><li>Crows</li><li>Elephant</li><li>Bottlenose Dolphin</li><li>Chimpanzee</li></ul>'
-answers[3][1]="<ul><li>Fantasia</li><li>Commando Duck</li><li>Santa's Workshop</li><li>The Jungle Book</li><li>Aladdin</li></ul><ul><li>Peter Pan</li><li>Lady and the Tramp</li><li>The Aristocats</li><li>Dumbo</li><li>Song of the South</li>"
-answers[4][1]='<ul><li>Women are more likely to survive a gunshot</li><li>Tiny details make a big difference</li><li>Nanotechnology could have saved you</li><li>Getting shot will probably bankrupt you</li><li>There are worse things to get shot with than a gun</li></ul>'
-
-questions[0][2] = "A drawer contains black and white socks. What is the smallest number of socks that must be drawn from the drawer such that you are guaranteed to have a pair of similar colour socks?";
-questions[1][2]="<img src='2-2.jpg' class='question-img'> How many moves are required to transport the balls from the tube I to tube III if all the balls must remain in the same order?"
-questions[2][2]="<img src='2-3.jpg' class='question-img'>Peter's father has five sons. The names of four sons are Fefe, Fifi, Fafa and Fufu respectively. What is the name of the fifth son?";
-questions[3][2]="<img src='2-4.png' class='question-img'>How many triangles are in the picture?";
-questions[4][2]="<img src='2-5.jpg' class='question-img'>If you have a 7-minute hourglass and an 11-minute hourglass, how can you boil an egg in exactly 15 minutes?";
-answers[0][2] = "3";
-answers[1][2] = "5";
-answers[2][2]='Peter';
-answers[3][2]='16';
-answers[4][2] = "<ol style='font-size:30px'><li>Start both hourglasses as you start boiling the egg.</li><li>After the 7-minute hourglass runs out, turn it over to start it again.</li><li>Four minutes later, when the 11-minute hourglass runs out, turn the 7-minute hourglass again.</li><li>Wait for the 7-minute hourglass to run out, which will take another four minutes and get you to exactly 15 minutes of boiling time.</li></ol>";
-
-questions[0][3] = "A critically acclaimed dark fantasy series by Kentaro Miura";
-answers[0][3] = "Berserk";
-questions[1][3] = "Please name an anime that's animated by Madhouse";
-answers[1][3] = "Tatami Galaxy, Hxh, Chihayafuru, Ippo, No game no life, OPM, Death parade, Overlord, Parasyte, Trigun, Cardcaptor Sakura, Beyblade, Texhnolyze,  Black Lagoon, Death Note, Claymore, Btooom!, Irregular at magic highschool, Frieren, ...";
-questions[2][3] = "This anime's name translated means \"everyday life\" and is the highest rated slice of life anime on MAL";
-answers[2][3] = "Nichijou";
-questions[3][3] = "A holiday celebrated from April 29 to May 5 that is also the longest vacation period for Japanese salarymen"
-answers[3][3] = "Golden Week";
-questions[4][3] = "A song from this Japanese voice was recently heard in Guardians of the Galaxies Vol. 3";
-answers[4][3] = "Hatsune Miku (Would've accepted the name of any vocaloid)";
-
 for (let i = 0; i < row; i++){
-    questions[i][4] = "<video class='question-vid' controls autoplay> <source src='4-" + i + ".mp4' type='video/mp4'> </video>";
+    questions[i][0] = "<img src='0-" + i + "q.jpg'>";
+    answers[i][0] = "<img src='0-" + i + "a.jpg'>";
+    questions[i][5] = "<audio controls> <source src='5-" + i + ".mp3' type='audio/mp3'> </audio>"
 }
-answers[0][4]='Brazil';answers[1][4]='China/Hong Kong idk';answers[2][4]='India';answers[3][4]='Russia';answers[4][4]='Italy';
+
+questions[0][1]='Aquarium located at the base of the CN Tower';questions[1][1]="Self proclaimed \"Toronto's Majestic Castle\"";questions[2][1]="Huge international event for film snobs";questions[3][1]="Toronto's baseball stadium";questions[4][1]="Toronto's most well known historic marketplace is famous for its food (apparently)";
+answers[0][1]="Ripley's Aquarium";answers[1][1]='Casa Loma';answers[2][1]='TIFF';answers[3][1]='Rogers Centre';answers[4][1]='St. Lawrence Market';
+
+questions[0][2]='Name of this short Roman sword';questions[1][2]='Indian ring shaped throwing weapon';questions[2][2]='Chinese equivalent of a naginata or glaive';questions[3][2]='Name of a person who maintains the weapons and armors of a knight who also helps the knight get into his armor';questions[4][2]='Viking sword name';
+answers[0][2]='Gladius';answers[1][2]='Chakram';answers[2][2]='Guandao/Yanyuedao';answers[3][2]='Page';answers[4][2]='Carolingian';
+
+questions[0][3] = 'Name the currency of Zimbabwe';questions[1][3]="Name a bordering country of Zimbabwe";questions[2][3]="Name one of Zimbabwe's top 5 exports";questions[3][3]="Zimbabwe has 16 official languages which earned the country a world record at one point. Excluding English, name 1 official language.";questions[4][3]="Capital of Zimbabwe";
+answers[0][3]="USD/Zimdollars (other answers may be accepted idk it's complicated)";
+answers[1][3]="<ul><li>Mozambique</li><li>Zambia</li><li>Namibia</li><li>Botswana</li><li>South Africa</li></ul>";
+answers[2][3]="<ol><li>Gold</li><li>Nickel Mattes</li><li>Raw Tobacco</li><li>Ferroalloys</li><li>Diamonds</li></ol>";
+answers[3][3]="<ul><li>Chewa</li><li>Chibarwe</li><li>Kalanga</li><li>Koisan</li><li>Nambya</li><li>Ndau</li><li>Ndebele</li><li>Shangani</li></ul><ul><li>Shona</li><li>Sign Language</li><li>Sotho</li><li>Tonga</li><li>Tswana</li><li>Venda</li><li>Xhosa</li></ul>";
+answers[4][3]="Harare";
+
+questions[0][4]="The Sentra, Altima, and Pathfinder are made by which manufacturer?";questions[1][4]="Some highways have special sections during peak times called HOV Lanes. What does HOV stand for?";questions[2][4]="Italian luxury car manufacturer featuring a trident as its logo";questions[3][4]='A V8 engine has 8 of these';questions[4][4]='The first American produced Japanese car which became the best selling Japanese car in America for 15 straight years';
+answers[0][4]="Nissan";answers[1][4]="High-Occupancy Vehicles";answers[2][4]="Maserati";answers[3][4]="Cylinders";answers[4][4]="Honda Accord";
+
+answers[0][5]="Bounty";answers[1][5]="Pizza Nova";answers[2][5]="Sleep Country";answers[3][5]="Hakim Optical";answers[4][5]="Alarmforce";
 
 questions[0][col] = "<audio controls> <source src='final.mp3' type='audio/mp3'> </audio> What is the game?";
 answers[0][col] = "Parappa the Rapper 2";
