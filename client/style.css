@@ -70,7 +70,7 @@
 
 .character-info:hover div{
 
-    background-color: rgb(214, 214, 214);
+    background-color: rgb(66,66,66);
     visibility: visible;
 }
 
@@ -80,13 +80,13 @@
     font-weight: bolder;
 }
 .green-text{
-    color: green;
+    color: lightgreen;
 }
 .red-text{
     color:red;
 }
 .yellow-text{
-    color: orange;
+    color: yellow;
 }
 
 .character-icon{

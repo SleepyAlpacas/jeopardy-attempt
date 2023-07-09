@@ -26,11 +26,12 @@ var correctPlayer = -1;
 var rockoed = false;
 //prisonerButtons format = [button, playerNum, button, playerNum]
 var prisonerButtons = [];
+var stimpyWagers = [];
 
 
 //'ws://localhost:8080'
 //'https://jeopardont.onrender.com'
-const socket = io('ws://localhost:8080');
+const socket = io('https://jeopardont.onrender.com');
 var room;
 var buzzedPlayers = [];
 
@@ -47,8 +48,8 @@ for (let i = 0; i < characterIcons.length; i++){
 }
 
 for (let i = 0; i < row; i++){
-    questions[i][0] = "<img src='0-" + i + "q.jpg'>";
-    answers[i][0] = "<img src='0-" + i + "a.jpg'>";
+    questions[i][0] = "<img class='question-img' src='0-" + i + "q.jpg'>";
+    answers[i][0] = "<img class='question-img' src='0-" + i + "a.jpg'>";
     questions[i][5] = "<audio controls> <source src='5-" + i + ".mp3' type='audio/mp3'> </audio>"
 }
 
@@ -70,8 +71,8 @@ answers[0][4]="Nissan";answers[1][4]="High-Occupancy Vehicles";answers[2][4]="Ma
 
 answers[0][5]="Bounty";answers[1][5]="Pizza Nova";answers[2][5]="Sleep Country";answers[3][5]="Hakim Optical";answers[4][5]="Alarmforce";
 
-questions[0][col] = "<audio controls> <source src='final.mp3' type='audio/mp3'> </audio> What is the game?";
-answers[0][col] = "Parappa the Rapper 2";
+questions[0][col] = "Including special Pikmins and the unreleased Pikmin 4, the Pikmin series has had 11 types of Pikmin. Name 6 types of Pikmin.";
+answers[0][col] = "<ul><li>Red Pikmin</li><li>Yellow Pikmin</li><li>Blue Pikmin</li><li>Purple Pikmin</li><li>White Pikmin</li><li>Rock Pikmin</li></ul><ul><li>Winged Pikmin (Pink Pikmin)</li><li>Ice Pikmin</li><li>Glow Pikmin (Green Pikmin)</li><li>Bulbmin</li><li>Mushroom Pikmin</li></ul>";
 
 
 $(document).ready(function(){
@@ -136,7 +137,7 @@ function showAnswer(){
     buzzedPlayers = [];
     removeBorder();
     rockoed = false;
-    moneyAfterWagers = [];
+    stimpyWagers = [];
 }
 
 function showBoard(){
@@ -172,8 +173,8 @@ function correctAnswer(player){
             powerPopUp(12, playerCharacters.indexOf(12));
             specialExit = true;
         }
-        if (moneyAfterWagers.length != 0 && moneyAfterWagers[player] != undefined){
-            addMoney(player, moneyAfterWagers[player]);
+        if (stimpyWagers.length != 0 && stimpyWagers[player] != undefined){
+            addMoney(player, stimpyWagers[player]);
             specialExit = true;
         }
         if (!specialExit) {
@@ -428,7 +429,7 @@ function useActivePower(player){
 
     else if (playerCharacters[player] == 13){
         let money = parseInt(document.getElementsByClassName('money')[player].innerHTML.slice(1));
-        moneyAfterWagers[player] = money * 2;
+        stimpyWagers[player] = money * 2;
         addMoney(player, -money);
     }
 

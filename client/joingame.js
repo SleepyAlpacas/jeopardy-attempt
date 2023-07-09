@@ -1,4 +1,4 @@
-const socket = io('ws://localhost:8080');
+const socket = io('https://jeopardont.onrender.com');
 var room;
 var playerNum; //0 indexed
 var characterNum;
