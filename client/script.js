@@ -317,7 +317,7 @@ function checkPowerCorrect(player){
         correctPlayer = player;
         let x = document.getElementsByClassName('board-cell');
         for (let i = 0; i < col; i++){
-            let currentCell = x[(currentQuestionRow+1)*row+i];
+            let currentCell = x[(currentQuestionRow+1)*col+i];
             if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "https://jeopardonthost.netlify.app/" + characterIcons[7] ){
                 break;
             }
@@ -327,7 +327,7 @@ function checkPowerCorrect(player){
             }
         }
         for (let i = 1; i < row+1; i++){
-            let currentCell = x[i*row+currentQuestionCol];
+            let currentCell = x[i*col+currentQuestionCol];
             if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "https://jeopardonthost.netlify.app/" + characterIcons[7]){
                 break;
             }
