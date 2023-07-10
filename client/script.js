@@ -302,6 +302,9 @@ function initCharacter(characterNum, playerNum){
 }
 
 //fix any image powers
+//https://jeopardonthost.netlify.app/
+//http://127.0.0.1:3002/
+//http://127.0.0.1:3000/jeopardy-attempt/client/
 function checkPowerCorrect(player){
     if (playerCharacters[player] == 3){
         playerCorrectBonus[player] += 50;
@@ -315,7 +318,7 @@ function checkPowerCorrect(player){
         let x = document.getElementsByClassName('board-cell');
         for (let i = 0; i < col; i++){
             let currentCell = x[(currentQuestionRow+1)*row+i];
-            if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7] ){
+            if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "https://jeopardonthost.netlify.app/" + characterIcons[7] ){
                 break;
             }
             if (i == col-1){
@@ -325,7 +328,7 @@ function checkPowerCorrect(player){
         }
         for (let i = 1; i < row+1; i++){
             let currentCell = x[i*row+currentQuestionCol];
-            if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
+            if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "https://jeopardonthost.netlify.app/" + characterIcons[7]){
                 break;
             }
             if (i == row){
@@ -337,7 +340,7 @@ function checkPowerCorrect(player){
             if (currentQuestionCol == currentQuestionRow){
                 for (let i = 0; i < row; i++){
                     let currentCell = x[row*(i+1) + i];
-                    if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == ''  || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
+                    if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == ''  || currentCell.childNodes[0].src != "https://jeopardonthost.netlify.app/" + characterIcons[7]){
                         console.log("i've broken" + (5*i) + " " + i);
                         break;
                     }
@@ -350,7 +353,7 @@ function checkPowerCorrect(player){
             if (currentQuestionCol + currentQuestionRow == 4){
                 for (let i = 1; i < row + 1; i++){
                     let currentCell = x[row*(i+1) - i];
-                    if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "http://127.0.0.1:3002/" + characterIcons[7]){
+                    if (currentCell.nodeName == 'BUTTON' || currentCell.innerHTML == '' || currentCell.childNodes[0].src != "https://jeopardonthost.netlify.app/" + characterIcons[7]){
                         console.log("i've broken" + (5*i) + " " + i);
                         break;
                     }
@@ -379,7 +382,7 @@ function checkPowerCorrect(player){
             let correctAnswerInRow = false;
             for (let i2 = 1; i2 < row + 1; i2++){
                 let currentCell = x[(i2 * col) + i];
-                if (currentCell.childNodes[0].src == "http://127.0.0.1:3000/jeopardy-attempt/client/" + characterIcons[15]){
+                if (currentCell.childNodes[0].src == "https://jeopardonthost.netlify.app/" + characterIcons[15]){
                     correctAnswerInRow = true;
                     continue;
                 }
