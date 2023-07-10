@@ -63,7 +63,7 @@ questions[0][3] = 'Name the currency of Zimbabwe';questions[1][3]="Name a border
 answers[0][3]="USD/Zimdollars (other answers may be accepted idk it's complicated)";
 answers[1][3]="<ul><li>Mozambique</li><li>Zambia</li><li>Namibia</li><li>Botswana</li><li>South Africa</li></ul>";
 answers[2][3]="<ol><li>Gold</li><li>Nickel Mattes</li><li>Raw Tobacco</li><li>Ferroalloys</li><li>Diamonds</li></ol>";
-answers[3][3]="<ul><li>Chewa</li><li>Chibarwe</li><li>Kalanga</li><li>Koisan</li><li>Nambya</li><li>Ndau</li><li>Ndebele</li><li>Shangani</li></ul><ul><li>Shona</li><li>Sign Language</li><li>Sotho</li><li>Tonga</li><li>Tswana</li><li>Venda</li><li>Xhosa</li></ul>";
+answers[3][3]="<ul><li>Chewa</li><li>Chibarwe</li><li>Kalanga</li><li>Koisan</li><li>Nambya</li></ul><ul><li>Ndau</li><li>Ndebele</li><li>Shangani</li><li>Shona</li><li>Sign Language</li></ul><ul><li>Sotho</li><li>Tonga</li><li>Tswana</li><li>Venda</li><li>Xhosa</li></ul>";
 answers[4][3]="Harare";
 
 questions[0][4]="The Sentra, Altima, and Pathfinder are made by which manufacturer?";questions[1][4]="Some highways have special sections during peak times called HOV Lanes. What does HOV stand for?";questions[2][4]="Italian luxury car manufacturer featuring a trident as its logo";questions[3][4]='A V8 engine has 8 of these';questions[4][4]='The first American produced Japanese car which became the best selling Japanese car in America for 15 straight years';
@@ -253,7 +253,7 @@ function showWinScreen(){
         x[i].innerHTML = moneyAfterWagers[i] + "$";
     }
 
-    let winnerIcon = document.getElementsByClassName('player-icon')[winnerIndex].src;
+    let winnerIcon = document.getElementsByClassName('player')[winnerIndex].childNodes[9].src;
     document.getElementById('winner-icon').src = winnerIcon;
 }
 
@@ -622,6 +622,7 @@ socket.on('send prisoner button', ({button, playerNum}) => {
 });
 
 socket.on('request question', ({row, col, playerNum}) => {
+    if (col == -1) {col = this.col};
     socket.emit('send question', ({question: questions[row][col], playerNum, room}));
 });
 
