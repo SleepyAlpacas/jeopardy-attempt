@@ -69,7 +69,7 @@ socket.on('wager screen', () => {
     document.getElementById('player-controls').style.display = 'none';
     document.getElementById('wager-screen').style.display = 'flex';
     if (characterNum == 18){
-        socket.emit('request question', ({row:0, col:5, playerNum, room}));
+        socket.emit('request question', ({row:0, col:-1, playerNum, room}));
     }
 });
 
